@@ -1,4 +1,4 @@
-# 🔍 Google Clone
+# 🔍 Google Homepage Clone
 
 Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 puro. Este proyecto replica la interfaz de usuario de Google con atención al detalle en el diseño y la funcionalidad visual.
 
@@ -14,7 +14,7 @@ Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 pu
 
 ## 🚀 Demo en Vivo
 
-🔗 **[Ver Demo](https://01-001-google-clone-desing.netlify.app/)**
+🔗 **[Ver Demo](https://00001-google-homepage-clone.netlify.app/)**
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -26,7 +26,7 @@ Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 pu
 ## 📁 Estructura del Proyecto
 
 ```
-00001-google-clone/
+00001-google-homepage-clone/
 ├── css/
 │   └── main.css          # Estilos principales
 ├── index.html             # Página principal
@@ -56,12 +56,12 @@ Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 pu
 
 1. **Clona el repositorio:**
    ```bash
-   git clone https://github.com/tu-usuario/00001-google-clone.git
+   git clone https://github.com/FROSTYLAN/00001-google-homepage-clone.git
    ```
 
 2. **Navega al directorio:**
    ```bash
-   cd 00001-google-clone
+   cd 00001-google-homepage-clone
    ```
 
 3. **Abre el archivo en tu navegador:**
@@ -110,8 +110,8 @@ Las contribuciones son bienvenidas. Por favor:
 ## 👨‍💻 Autor
 
 **Charles Castillo**
-- GitHub: [@tu-usuario](https://github.com/tu-usuario)
-- LinkedIn: [Tu Perfil](https://linkedin.com/in/tu-perfil)
+- GitHub: [@tu-usuario](https://github.com/FROSTYLAN)
+- LinkedIn: [Tu Perfil](https://linkedin.com/in/charles-castillo-772968234)
 
 ---
 

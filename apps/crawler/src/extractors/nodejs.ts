@@ -21,8 +21,11 @@ export const extractNodeDocs: Extractor = (html, pageUrl, source) => {
 
   const content = $('#apicontent');
   // Ruido que no aporta a la búsqueda: metadatos de versión, historial de cambios,
-  // el selector ESM/CommonJS y la variante CommonJS duplicada de cada ejemplo.
-  content.find('.api_metadata, details.changelog, input, pre > code:not(:first-of-type)').remove();
+  // el selector ESM/CommonJS, la variante CommonJS duplicada de cada ejemplo y la barra
+  // de cada bloque de código (etiqueta del lenguaje y botón "copy").
+  content
+    .find('.api_metadata, details.changelog, input, button, .code-toolbar, pre > code:not(:first-of-type)')
+    .remove();
 
   const documents: SourceDocument[] = [];
   const stack: { level: number; title: string }[] = [];

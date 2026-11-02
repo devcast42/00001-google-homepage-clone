@@ -13,6 +13,7 @@ export default defineConfig({
           name: 'web',
           include: ['apps/web/test/**/*.test.{ts,tsx}'],
           environment: 'jsdom',
+          setupFiles: ['apps/web/test/setup.ts'],
         },
       },
     ],

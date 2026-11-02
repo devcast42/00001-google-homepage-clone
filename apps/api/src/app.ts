@@ -96,8 +96,12 @@ export async function buildApp(options: AppOptions): Promise<FastifyInstance> {
   });
 
   // Las comprobaciones de salud se registran fuera del límite de peticiones.
-  app.get('/healthz', async () => ({ status: 'ok' }));
-  app.get('/readyz', async () => ({ status: 'ready', documents: index.size }));
+  // Se consultan cada pocos segundos (Docker, balanceadores): no se registran salvo errores.
+  app.get('/healthz', { logLevel: 'warn' }, async () => ({ status: 'ok' }));
+  app.get('/readyz', { logLevel: 'warn' }, async () => ({
+    status: 'ready',
+    documents: index.size,
+  }));
 
   await app.register(
     async (api) => {

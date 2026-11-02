@@ -20,7 +20,14 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['packages/*/src/**', 'apps/*/src/**'],
-      exclude: ['**/*.d.ts', 'apps/web/src/main.tsx'],
+      // Puntos de entrada (CLI, arranque del servidor): los cubren las pruebas e2e y el uso real.
+      exclude: [
+        '**/*.d.ts',
+        'apps/web/src/main.tsx',
+        'apps/api/src/server.ts',
+        'apps/crawler/src/cli/**',
+      ],
+      thresholds: { lines: 90, statements: 90, functions: 85, branches: 80 },
     },
   },
 });

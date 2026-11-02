@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "tsc -b && npm run build -w @docseek/web",
-    "typecheck": "tsc -b && npm run typecheck -w @docseek/web",
+    "typecheck": "tsc -b && tsc -p tsconfig.tests.json && npm run typecheck -w @docseek/web",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "vitest run",

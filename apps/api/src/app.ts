@@ -1,5 +1,9 @@
 import { existsSync } from 'node:fs';
-import Fastify, { type FastifyError, type FastifyInstance, type FastifyServerOptions } from 'fastify';
+import Fastify, {
+  type FastifyError,
+  type FastifyInstance,
+  type FastifyServerOptions,
+} from 'fastify';
 import rateLimit from '@fastify/rate-limit';
 import fastifyStatic from '@fastify/static';
 import type { SearchIndex, SearchResult, Suggestion } from '@docseek/engine';
@@ -95,128 +99,134 @@ export async function buildApp(options: AppOptions): Promise<FastifyInstance> {
   app.get('/healthz', async () => ({ status: 'ok' }));
   app.get('/readyz', async () => ({ status: 'ready', documents: index.size }));
 
-  await app.register(async (api) => {
-    await api.register(rateLimit, {
-      max: options.rateLimitPerMinute ?? 300,
-      timeWindow: '1 minute',
-    });
+  await app.register(
+    async (api) => {
+      await api.register(rateLimit, {
+        max: options.rateLimitPerMinute ?? 300,
+        timeWindow: '1 minute',
+      });
 
-    api.get<{ Querystring: SearchQuery }>(
-      '/search',
-      {
-        schema: {
-          querystring: {
-            type: 'object',
-            properties: {
-              q: { type: 'string', minLength: 1, maxLength: MAX_QUERY_LENGTH },
-              page: { type: 'integer', minimum: 1, maximum: 100, default: 1 },
-              pageSize: { type: 'integer', minimum: 1, maximum: MAX_PAGE_SIZE, default: 10 },
-              source: { type: 'string', pattern: '^[a-z0-9_-]+(,[a-z0-9_-]+)*$' },
-            },
-            required: ['q'],
-          },
-          response: {
-            200: {
+      api.get<{ Querystring: SearchQuery }>(
+        '/search',
+        {
+          schema: {
+            querystring: {
               type: 'object',
               properties: {
-                query: { type: 'string' },
-                page: { type: 'integer' },
-                pageSize: { type: 'integer' },
-                total: { type: 'integer' },
-                totalPages: { type: 'integer' },
-                tookMs: { type: 'number' },
-                didYouMean: { type: 'string' },
-                results: {
-                  type: 'array',
-                  items: {
-                    type: 'object',
-                    properties: {
-                      id: { type: 'string' },
-                      url: { type: 'string' },
-                      source: { type: 'string' },
-                      breadcrumbs: { type: 'array', items: { type: 'string' } },
-                      title: highlightedSchema,
-                      snippet: highlightedSchema,
-                      score: { type: 'number' },
+                q: { type: 'string', minLength: 1, maxLength: MAX_QUERY_LENGTH },
+                page: { type: 'integer', minimum: 1, maximum: 100, default: 1 },
+                pageSize: { type: 'integer', minimum: 1, maximum: MAX_PAGE_SIZE, default: 10 },
+                source: { type: 'string', pattern: '^[a-z0-9_-]+(,[a-z0-9_-]+)*$' },
+              },
+              required: ['q'],
+            },
+            response: {
+              200: {
+                type: 'object',
+                properties: {
+                  query: { type: 'string' },
+                  page: { type: 'integer' },
+                  pageSize: { type: 'integer' },
+                  total: { type: 'integer' },
+                  totalPages: { type: 'integer' },
+                  tookMs: { type: 'number' },
+                  didYouMean: { type: 'string' },
+                  results: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        id: { type: 'string' },
+                        url: { type: 'string' },
+                        source: { type: 'string' },
+                        breadcrumbs: { type: 'array', items: { type: 'string' } },
+                        title: highlightedSchema,
+                        snippet: highlightedSchema,
+                        score: { type: 'number' },
+                      },
                     },
                   },
                 },
               },
+              400: errorSchema,
             },
-            400: errorSchema,
           },
         },
-      },
-      async (request, reply) => {
-        const { q, page, pageSize, source } = request.query;
-        const sources = source?.split(',');
-        const key = JSON.stringify([q.trim().toLowerCase(), page, pageSize, sources]);
+        async (request, reply) => {
+          const { q, page, pageSize, source } = request.query;
+          const sources = source?.split(',');
+          const key = JSON.stringify([q.trim().toLowerCase(), page, pageSize, sources]);
 
-        const started = performance.now();
-        let result = searchCache.get(key);
-        const cached = result !== undefined;
-        result ??= index.search(q, {
-          limit: pageSize,
-          offset: (page - 1) * pageSize,
-          ...(sources ? { sources } : {}),
-        });
-        if (!cached) searchCache.set(key, result);
-        const tookMs = Math.round((performance.now() - started) * 100) / 100;
+          const started = performance.now();
+          let result = searchCache.get(key);
+          const cached = result !== undefined;
+          result ??= index.search(q, {
+            limit: pageSize,
+            offset: (page - 1) * pageSize,
+            ...(sources ? { sources } : {}),
+          });
+          if (!cached) searchCache.set(key, result);
+          const tookMs = Math.round((performance.now() - started) * 100) / 100;
 
-        reply
-          .header('cache-control', 'public, max-age=60')
-          .header('x-cache', cached ? 'HIT' : 'MISS')
-          .header('server-timing', `search;dur=${tookMs}`);
+          reply
+            .header('cache-control', 'public, max-age=60')
+            .header('x-cache', cached ? 'HIT' : 'MISS')
+            .header('server-timing', `search;dur=${tookMs}`);
 
-        return {
-          query: q,
-          page,
-          pageSize,
-          total: result.total,
-          totalPages: Math.ceil(result.total / pageSize),
-          tookMs,
-          ...(result.didYouMean ? { didYouMean: result.didYouMean } : {}),
-          results: result.hits,
-        };
-      },
-    );
-
-    api.get<{ Querystring: SuggestQuery }>(
-      '/suggest',
-      {
-        schema: {
-          querystring: {
-            type: 'object',
-            properties: {
-              q: { type: 'string', minLength: 1, maxLength: MAX_QUERY_LENGTH },
-              limit: { type: 'integer', minimum: 1, maximum: 20, default: 8 },
-            },
-            required: ['q'],
-          },
-          response: { 400: errorSchema },
+          return {
+            query: q,
+            page,
+            pageSize,
+            total: result.total,
+            totalPages: Math.ceil(result.total / pageSize),
+            tookMs,
+            ...(result.didYouMean ? { didYouMean: result.didYouMean } : {}),
+            results: result.hits,
+          };
         },
-      },
-      async (request, reply) => {
-        const { q, limit } = request.query;
-        const key = JSON.stringify([q.trim().toLowerCase(), limit]);
-        let suggestions = suggestCache.get(key);
-        if (!suggestions) {
-          suggestions = index.suggest(q, limit);
-          suggestCache.set(key, suggestions);
-        }
-        reply.header('cache-control', 'public, max-age=300');
-        return { query: q, suggestions };
-      },
-    );
+      );
 
-    api.get('/stats', async () => index.stats());
+      api.get<{ Querystring: SuggestQuery }>(
+        '/suggest',
+        {
+          schema: {
+            querystring: {
+              type: 'object',
+              properties: {
+                q: { type: 'string', minLength: 1, maxLength: MAX_QUERY_LENGTH },
+                limit: { type: 'integer', minimum: 1, maximum: 20, default: 8 },
+              },
+              required: ['q'],
+            },
+            response: { 400: errorSchema },
+          },
+        },
+        async (request, reply) => {
+          const { q, limit } = request.query;
+          const key = JSON.stringify([q.trim().toLowerCase(), limit]);
+          let suggestions = suggestCache.get(key);
+          if (!suggestions) {
+            suggestions = index.suggest(q, limit);
+            suggestCache.set(key, suggestions);
+          }
+          reply.header('cache-control', 'public, max-age=300');
+          return { query: q, suggestions };
+        },
+      );
 
-    api.setNotFoundHandler((request, reply) =>
-      reply.status(404).send({
-        error: { code: 'not_found', message: `Ruta no encontrada: ${request.method} ${request.url}` },
-      }),
-    );
-  }, { prefix: '/api' });
+      api.get('/stats', async () => index.stats());
+
+      api.setNotFoundHandler((request, reply) =>
+        reply.status(404).send({
+          error: {
+            code: 'not_found',
+            message: `Ruta no encontrada: ${request.method} ${request.url}`,
+          },
+        }),
+      );
+    },
+    { prefix: '/api' },
+  );
 
   // Frontend compilado. Cualquier otra ruta devuelve index.html para que el enrutado
   // del lado del cliente funcione al recargar o compartir una URL de resultados.

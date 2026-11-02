@@ -6,7 +6,14 @@ import type { SourceDocument } from '@docseek/engine';
 import { readCorpus, writeCorpus } from '../src/corpus.js';
 
 const docs: SourceDocument[] = [
-  { id: 'a', url: 'https://x/a', source: 's', title: 'A', breadcrumbs: [], body: 'línea con "comillas"\ny salto' },
+  {
+    id: 'a',
+    url: 'https://x/a',
+    source: 's',
+    title: 'A',
+    breadcrumbs: [],
+    body: 'línea con "comillas"\ny salto',
+  },
   { id: 'b', url: 'https://x/b', source: 's', title: 'B', breadcrumbs: ['A'], body: '' },
 ];
 

@@ -12,7 +12,9 @@ const { index, loadMs } = loadIndex();
 global.gc?.();
 const heapMb = (process.memoryUsage().heapUsed - heapBefore) / 1024 / 1024;
 
-const queries = [...loadJudgements('queries'), ...loadJudgements('holdout')].map(({ query }) => query);
+const queries = [...loadJudgements('queries'), ...loadJudgements('holdout')].map(
+  ({ query }) => query,
+);
 const prefixes = queries.flatMap((query) =>
   Array.from({ length: query.length - 1 }, (_, i) => query.slice(0, i + 2)),
 );

@@ -39,17 +39,20 @@ Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 pu
 ## 🎨 Características de Diseño
 
 ### Header
+
 - Navegación superior con enlaces a Gmail e Imágenes
 - Menú de aplicaciones de Google
 - Avatar de usuario (inicial)
 
 ### Sección Principal
+
 - Logo de Google centrado (texto con los colores de la marca)
 - Barra de búsqueda con iconos de lupa y micrófono
 - Botones "Buscar con Google" y "Me siento con suerte"
 - Efectos hover suaves
 
 ### Footer
+
 - Enlaces informativos divididos en dos secciones
 - Siempre en la parte inferior sin tapar el contenido (layout flex de altura completa)
 - Estilo consistente con el tema de Google
@@ -57,11 +60,13 @@ Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 pu
 ## 🚀 Instalación y Uso
 
 1. **Clona el repositorio:**
+
    ```bash
    git clone https://github.com/devcast42/00001-google-homepage-clone.git
    ```
 
 2. **Navega al directorio:**
+
    ```bash
    cd 00001-google-homepage-clone
    ```
@@ -75,6 +80,7 @@ Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 pu
 ## 📱 Responsividad
 
 El diseño está optimizado para:
+
 - 💻 **Desktop** - Experiencia completa
 - 📱 **Mobile** - Adaptación fluida
 - 📟 **Tablet** - Diseño intermedio
@@ -111,6 +117,7 @@ Las contribuciones son bienvenidas. Por favor:
 ## 👨‍💻 Autor
 
 **Charles Castillo**
+
 - GitHub: [@FROSTYLAN](https://github.com/FROSTYLAN)
 - LinkedIn: [Charles Castillo](https://linkedin.com/in/charles-castillo-772968234)
 

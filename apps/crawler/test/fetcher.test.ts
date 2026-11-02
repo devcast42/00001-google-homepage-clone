@@ -6,15 +6,27 @@ describe('PoliteFetcher', () => {
   it('retries 503 responses and eventually succeeds', async () => {
     let calls = 0;
     const fetch = (async () =>
-      ++calls < 3 ? new Response('busy', { status: 503 }) : new Response('ok')) as typeof globalThis.fetch;
-    const fetcher = new PoliteFetcher({ userAgent: 'test', minIntervalMs: 0, fetch, sleep: noSleep });
+      ++calls < 3
+        ? new Response('busy', { status: 503 })
+        : new Response('ok')) as typeof globalThis.fetch;
+    const fetcher = new PoliteFetcher({
+      userAgent: 'test',
+      minIntervalMs: 0,
+      fetch,
+      sleep: noSleep,
+    });
     await expect(fetcher.get('https://a.test/')).resolves.toMatchObject({ body: 'ok' });
     expect(calls).toBe(3);
   });
 
   it('does not retry 404 and reports the status', async () => {
     const { fetch, requests } = fakeWeb({});
-    const fetcher = new PoliteFetcher({ userAgent: 'test', minIntervalMs: 0, fetch, sleep: noSleep });
+    const fetcher = new PoliteFetcher({
+      userAgent: 'test',
+      minIntervalMs: 0,
+      fetch,
+      sleep: noSleep,
+    });
     const error = await fetcher.get('https://a.test/missing').catch((e: unknown) => e);
     expect(error).toBeInstanceOf(FetchError);
     expect((error as FetchError).status).toBe(404);
@@ -27,7 +39,13 @@ describe('PoliteFetcher', () => {
       calls++;
       throw new TypeError('fetch failed');
     }) as typeof globalThis.fetch;
-    const fetcher = new PoliteFetcher({ userAgent: 'test', minIntervalMs: 0, maxRetries: 2, fetch, sleep: noSleep });
+    const fetcher = new PoliteFetcher({
+      userAgent: 'test',
+      minIntervalMs: 0,
+      maxRetries: 2,
+      fetch,
+      sleep: noSleep,
+    });
     await expect(fetcher.get('https://a.test/')).rejects.toThrow(/3 intentos/);
     expect(calls).toBe(3);
   });
@@ -35,7 +53,11 @@ describe('PoliteFetcher', () => {
   it('spaces requests to the same host but not across hosts', async () => {
     const clock = 0;
     const waits: number[] = [];
-    const { fetch } = fakeWeb({ 'https://a.test/1': 'x', 'https://a.test/2': 'x', 'https://b.test/1': 'x' });
+    const { fetch } = fakeWeb({
+      'https://a.test/1': 'x',
+      'https://a.test/2': 'x',
+      'https://b.test/1': 'x',
+    });
     const fetcher = new PoliteFetcher({
       userAgent: 'test',
       minIntervalMs: 500,
@@ -59,7 +81,9 @@ describe('PoliteFetcher', () => {
       userAgent = new Headers(init?.headers).get('user-agent');
       return new Response('ok');
     }) as typeof globalThis.fetch;
-    await new PoliteFetcher({ userAgent: 'DocSeekBot/0.1', minIntervalMs: 0, fetch }).get('https://a.test/');
+    await new PoliteFetcher({ userAgent: 'DocSeekBot/0.1', minIntervalMs: 0, fetch }).get(
+      'https://a.test/',
+    );
     expect(userAgent).toBe('DocSeekBot/0.1');
   });
 });

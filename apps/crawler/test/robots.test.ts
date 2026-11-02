@@ -30,12 +30,18 @@ describe('parseRobots', () => {
   });
 
   it('groups consecutive user-agent lines', () => {
-    const rules = parseRobots('User-agent: a\nUser-agent: docseekbot\nDisallow: /x\n', 'DocSeekBot');
+    const rules = parseRobots(
+      'User-agent: a\nUser-agent: docseekbot\nDisallow: /x\n',
+      'DocSeekBot',
+    );
     expect(rules.isAllowed('/x')).toBe(false);
   });
 
   it('prefers the longest match and Allow on ties', () => {
-    const rules = parseRobots('User-agent: *\nDisallow: /a\nAllow: /a/b\nAllow: /c\nDisallow: /c\n', 'bot');
+    const rules = parseRobots(
+      'User-agent: *\nDisallow: /a\nAllow: /a/b\nAllow: /c\nDisallow: /c\n',
+      'bot',
+    );
     expect(rules.isAllowed('/a/x')).toBe(false);
     expect(rules.isAllowed('/a/b/c')).toBe(true);
     expect(rules.isAllowed('/c')).toBe(true);

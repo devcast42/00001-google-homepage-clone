@@ -1,6 +1,12 @@
 [
-  { "query": "read file", "relevant": ["fs.readFile(", "fsPromises.readFile(", "fs.readFileSync("] },
-  { "query": "write file", "relevant": ["fs.writeFile(", "fsPromises.writeFile(", "fs.writeFileSync("] },
+  {
+    "query": "read file",
+    "relevant": ["fs.readFile(", "fsPromises.readFile(", "fs.readFileSync("]
+  },
+  {
+    "query": "write file",
+    "relevant": ["fs.writeFile(", "fsPromises.writeFile(", "fs.writeFileSync("]
+  },
   { "query": "create http server", "relevant": ["http.createServer("] },
   { "query": "http request", "relevant": ["http.request("] },
   { "query": "event emitter on", "relevant": ["emitter.on("] },
@@ -14,13 +20,28 @@
   { "query": "sha256 hash", "relevant": ["crypto.createHash("] },
   { "query": "random uuid", "relevant": ["crypto.randomUUID("] },
   { "query": "setTimeout promise", "relevant": ["timersPromises.setTimeout("] },
-  { "query": "list files in directory", "relevant": ["fs.readdir(", "fsPromises.readdir(", "fs.readdirSync("] },
-  { "query": "create directory recursive", "relevant": ["fs.mkdir(", "fsPromises.mkdir(", "fs.mkdirSync("] },
-  { "query": "check file exists", "relevant": ["fs.existsSync(", "fs.access(", "fsPromises.access(", "fs.exists("] },
-  { "query": "watch file changes", "relevant": ["fs.watch(", "fsPromises.watch(", "fs.watchFile("] },
+  {
+    "query": "list files in directory",
+    "relevant": ["fs.readdir(", "fsPromises.readdir(", "fs.readdirSync("]
+  },
+  {
+    "query": "create directory recursive",
+    "relevant": ["fs.mkdir(", "fsPromises.mkdir(", "fs.mkdirSync("]
+  },
+  {
+    "query": "check file exists",
+    "relevant": ["fs.existsSync(", "fs.access(", "fsPromises.access(", "fs.exists("]
+  },
+  {
+    "query": "watch file changes",
+    "relevant": ["fs.watch(", "fsPromises.watch(", "fs.watchFile("]
+  },
   { "query": "worker thread", "relevant": ["new Worker(", "Class: Worker", "Worker threads"] },
   { "query": "stream pipeline", "relevant": ["stream.pipeline(", "stream.pipeline(source"] },
-  { "query": "read line by line", "relevant": ["readline.createInterface(", "Example: Read file stream line-by-Line"] },
+  {
+    "query": "read line by line",
+    "relevant": ["readline.createInterface(", "Example: Read file stream line-by-Line"]
+  },
   { "query": "parse url", "relevant": ["new URL(", "url.parse("] },
   { "query": "buffer from string", "relevant": ["Static method: Buffer.from(string"] },
   { "query": "deep equal assertion", "relevant": ["assert.deepStrictEqual(", "assert.deepEqual("] },
@@ -34,7 +55,10 @@
   { "query": "dns lookup", "relevant": ["dns.lookup(", "dnsPromises.lookup("] },
   { "query": "tcp server", "relevant": ["net.createServer("] },
   { "query": "gzip compress", "relevant": ["zlib.createGzip(", "zlib.gzip(", "zlib.gzipSync("] },
-  { "query": "async local storage", "relevant": ["Class: AsyncLocalStorage", "new AsyncLocalStorage("] },
+  {
+    "query": "async local storage",
+    "relevant": ["Class: AsyncLocalStorage", "new AsyncLocalStorage("]
+  },
   { "query": "structured clone", "relevant": ["structuredClone("] },
   { "query": "abort controller", "relevant": ["Class: AbortController"] },
   { "query": "sqlite database", "relevant": ["Class: Database", "new Database(", "SQLite"] },
@@ -42,7 +66,10 @@
   { "query": "fs.readFile", "relevant": ["fs.readFile("] },
   { "query": "readFileSync", "relevant": ["fs.readFileSync("] },
   { "query": "createReadStream", "relevant": ["fs.createReadStream("] },
-  { "query": "readFiel", "relevant": ["fs.readFile(", "fsPromises.readFile(", "filehandle.readFile("] },
+  {
+    "query": "readFiel",
+    "relevant": ["fs.readFile(", "fsPromises.readFile(", "filehandle.readFile("]
+  },
   { "query": "chld proces spawn", "relevant": ["child_process.spawn("] },
   { "query": "evnt emiter", "relevant": ["Class: EventEmitter", "Events"] }
 ]

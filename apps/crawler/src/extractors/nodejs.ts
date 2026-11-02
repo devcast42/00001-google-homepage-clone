@@ -24,7 +24,9 @@ export const extractNodeDocs: Extractor = (html, pageUrl, source) => {
   // el selector ESM/CommonJS, la variante CommonJS duplicada de cada ejemplo y la barra
   // de cada bloque de código (etiqueta del lenguaje y botón "copy").
   content
-    .find('.api_metadata, details.changelog, input, button, .code-toolbar, pre > code:not(:first-of-type)')
+    .find(
+      '.api_metadata, details.changelog, input, button, .code-toolbar, pre > code:not(:first-of-type)',
+    )
     .remove();
 
   const documents: SourceDocument[] = [];

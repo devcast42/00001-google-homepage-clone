@@ -1,8 +1,4 @@
 {
   "files": [],
-  "references": [
-    { "path": "packages/engine" },
-    { "path": "apps/crawler" },
-    { "path": "apps/api" }
-  ]
+  "references": [{ "path": "packages/engine" }, { "path": "apps/crawler" }, { "path": "apps/api" }]
 }

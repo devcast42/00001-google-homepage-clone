@@ -3,7 +3,9 @@ import { normalizeUrl } from '../src/url.js';
 
 describe('normalizeUrl', () => {
   it('resolves relative links and drops the fragment', () => {
-    expect(normalizeUrl('path.html#x', 'https://nodejs.org/api/fs.html')).toBe('https://nodejs.org/api/path.html');
+    expect(normalizeUrl('path.html#x', 'https://nodejs.org/api/fs.html')).toBe(
+      'https://nodejs.org/api/path.html',
+    );
   });
 
   it('lowercases the host, removes default ports and tracking params, sorts the query', () => {

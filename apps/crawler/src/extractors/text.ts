@@ -1,7 +1,8 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import type { AnyNode } from 'domhandler';
 
-const BLOCK_ELEMENTS = 'p, li, pre, div, tr, td, th, h1, h2, h3, h4, h5, h6, blockquote, dt, dd, br';
+const BLOCK_ELEMENTS =
+  'p, li, pre, div, tr, td, th, h1, h2, h3, h4, h5, h6, blockquote, dt, dd, br';
 
 /**
  * Texto plano de un fragmento HTML, con espacios entre bloques.

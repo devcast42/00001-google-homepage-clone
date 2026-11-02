@@ -20,15 +20,43 @@ const score = (ranking: RankingConfig) => {
   return metrics.mrr + metrics.successAt1 * 0.001;
 };
 
-const axes: { name: string; values: number[]; apply: (r: Mutable<RankingConfig>, v: number) => void }[] = [
+const axes: {
+  name: string;
+  values: number[];
+  apply: (r: Mutable<RankingConfig>, v: number) => void;
+}[] = [
   { name: 'k1', values: [0.6, 0.9, 1.2, 1.6, 2.0], apply: (r, v) => (r.k1 = v) },
-  { name: 'weights.title', values: [2, 3, 5, 8, 12], apply: (r, v) => (r.weights = [v, r.weights[1], r.weights[2]]) },
-  { name: 'weights.breadcrumbs', values: [0, 0.5, 1, 1.5, 3], apply: (r, v) => (r.weights = [r.weights[0], v, r.weights[2]]) },
-  { name: 'b.title', values: [0, 0.2, 0.4, 0.6, 0.8], apply: (r, v) => (r.b = [v, r.b[1], r.b[2]]) },
-  { name: 'b.body', values: [0.3, 0.5, 0.75, 0.9, 1], apply: (r, v) => (r.b = [r.b[0], r.b[1], v]) },
-  { name: 'derivedWeight', values: [0.15, 0.25, 0.35, 0.5, 0.75], apply: (r, v) => (r.derivedWeight = v) },
+  {
+    name: 'weights.title',
+    values: [2, 3, 5, 8, 12],
+    apply: (r, v) => (r.weights = [v, r.weights[1], r.weights[2]]),
+  },
+  {
+    name: 'weights.breadcrumbs',
+    values: [0, 0.5, 1, 1.5, 3],
+    apply: (r, v) => (r.weights = [r.weights[0], v, r.weights[2]]),
+  },
+  {
+    name: 'b.title',
+    values: [0, 0.2, 0.4, 0.6, 0.8],
+    apply: (r, v) => (r.b = [v, r.b[1], r.b[2]]),
+  },
+  {
+    name: 'b.body',
+    values: [0.3, 0.5, 0.75, 0.9, 1],
+    apply: (r, v) => (r.b = [r.b[0], r.b[1], v]),
+  },
+  {
+    name: 'derivedWeight',
+    values: [0.15, 0.25, 0.35, 0.5, 0.75],
+    apply: (r, v) => (r.derivedWeight = v),
+  },
   { name: 'titleBonus', values: [0, 0.25, 0.5, 1, 2, 3], apply: (r, v) => (r.titleBonus = v) },
-  { name: 'depthPenalty', values: [0, 0.05, 0.1, 0.2, 0.35], apply: (r, v) => (r.depthPenalty = v) },
+  {
+    name: 'depthPenalty',
+    values: [0, 0.05, 0.1, 0.2, 0.35],
+    apply: (r, v) => (r.depthPenalty = v),
+  },
   { name: 'joinedWeight', values: [0, 0.2, 0.4, 0.6, 0.8], apply: (r, v) => (r.joinedWeight = v) },
 ];
 

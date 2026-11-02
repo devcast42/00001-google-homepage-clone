@@ -14,10 +14,16 @@ const doc = (id: string, title: string, body: string, source = 'nodejs'): Source
 });
 
 const documents = [
-  doc('readfile', 'fs.readFile(path, callback)', 'Asynchronously reads the entire contents of a file.'),
+  doc(
+    'readfile',
+    'fs.readFile(path, callback)',
+    'Asynchronously reads the entire contents of a file.',
+  ),
   doc('writefile', 'fs.writeFile(file, data)', 'Asynchronously writes data to a file.'),
   doc('listener', 'emitter.on(eventName, listener)', 'Adds the listener function.'),
-  ...Array.from({ length: 25 }, (_, i) => doc(`file-${i}`, `File topic ${i}`, 'Something about a file.')),
+  ...Array.from({ length: 25 }, (_, i) =>
+    doc(`file-${i}`, `File topic ${i}`, 'Something about a file.'),
+  ),
   doc('fetch', 'fetch()', 'Fetches a file from the network.', 'mdn'),
 ];
 const index = new IndexBuilder().addAll(documents).build();
@@ -96,7 +102,10 @@ describe('GET /api/search', () => {
 describe('GET /api/suggest', () => {
   it('completes partial input', async () => {
     const body = (await app.inject('/api/suggest?q=emitter.o')).json();
-    expect(body.suggestions[0]).toMatchObject({ id: 'listener', title: 'emitter.on(eventName, listener)' });
+    expect(body.suggestions[0]).toMatchObject({
+      id: 'listener',
+      title: 'emitter.on(eventName, listener)',
+    });
   });
 
   it('respects the limit', async () => {
@@ -111,7 +120,10 @@ describe('other routes', () => {
       sources: { nodejs: documents.length - 1, mdn: 1 },
     });
     expect((await app.inject('/healthz')).json()).toEqual({ status: 'ok' });
-    expect((await app.inject('/readyz')).json()).toEqual({ status: 'ready', documents: documents.length });
+    expect((await app.inject('/readyz')).json()).toEqual({
+      status: 'ready',
+      documents: documents.length,
+    });
   });
 
   it('returns JSON 404 for unknown API routes', async () => {
@@ -138,7 +150,8 @@ describe('rate limiting', () => {
     const limited = await buildApp({ index, rateLimitPerMinute: 2 });
     try {
       const codes = [];
-      for (let i = 0; i < 3; i++) codes.push((await limited.inject('/api/search?q=file')).statusCode);
+      for (let i = 0; i < 3; i++)
+        codes.push((await limited.inject('/api/search?q=file')).statusCode);
       expect(codes).toEqual([200, 200, 429]);
       expect((await limited.inject('/api/search?q=file')).json().error.code).toBe('rate_limited');
       expect((await limited.inject('/healthz')).statusCode).toBe(200);

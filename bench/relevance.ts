@@ -43,7 +43,9 @@ const metrics = evaluate(index, judgements);
 if (values.verbose) {
   for (const { query, rank, top } of metrics.outcomes) {
     const mark = rank === 1 ? '✓' : rank > 0 ? '~' : '✗';
-    console.info(`${mark} ${String(rank || '-').padStart(2)}  ${query.padEnd(30)} → ${top ?? '(sin resultados)'}`);
+    console.info(
+      `${mark} ${String(rank || '-').padStart(2)}  ${query.padEnd(30)} → ${top ?? '(sin resultados)'}`,
+    );
   }
   console.info();
 }

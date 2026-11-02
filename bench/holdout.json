@@ -1,9 +1,34 @@
 [
-  { "query": "append to file", "relevant": ["fs.appendFile(", "fsPromises.appendFile(", "fs.appendFileSync("] },
-  { "query": "delete file", "relevant": ["fs.unlink(", "fsPromises.unlink(", "fs.rm(", "fsPromises.rm(", "fs.unlinkSync(", "fs.rmSync("] },
+  {
+    "query": "append to file",
+    "relevant": ["fs.appendFile(", "fsPromises.appendFile(", "fs.appendFileSync("]
+  },
+  {
+    "query": "delete file",
+    "relevant": [
+      "fs.unlink(",
+      "fsPromises.unlink(",
+      "fs.rm(",
+      "fsPromises.rm(",
+      "fs.unlinkSync(",
+      "fs.rmSync("
+    ]
+  },
   { "query": "rename file", "relevant": ["fs.rename(", "fsPromises.rename(", "fs.renameSync("] },
-  { "query": "copy file", "relevant": ["fs.copyFile(", "fsPromises.copyFile(", "fs.copyFileSync(", "fs.cp(", "fsPromises.cp("] },
-  { "query": "file stats size", "relevant": ["fs.stat(", "fsPromises.stat(", "Class: fs.Stats", "stats.size"] },
+  {
+    "query": "copy file",
+    "relevant": [
+      "fs.copyFile(",
+      "fsPromises.copyFile(",
+      "fs.copyFileSync(",
+      "fs.cp(",
+      "fsPromises.cp("
+    ]
+  },
+  {
+    "query": "file stats size",
+    "relevant": ["fs.stat(", "fsPromises.stat(", "Class: fs.Stats", "stats.size"]
+  },
   { "query": "https get request", "relevant": ["https.get(", "https.request("] },
   { "query": "once event", "relevant": ["emitter.once(", "events.once("] },
   { "query": "emit event", "relevant": ["emitter.emit("] },
@@ -17,9 +42,15 @@
   { "query": "operating system platform", "relevant": ["os.platform(", "process.platform"] },
   { "query": "cpu count", "relevant": ["os.cpus(", "os.availableParallelism("] },
   { "query": "memory usage", "relevant": ["process.memoryUsage("] },
-  { "query": "high resolution time", "relevant": ["process.hrtime(", "process.hrtime.bigint(", "performance.now("] },
+  {
+    "query": "high resolution time",
+    "relevant": ["process.hrtime(", "process.hrtime.bigint(", "performance.now("]
+  },
   { "query": "udp socket", "relevant": ["dgram.createSocket("] },
-  { "query": "decompress gzip", "relevant": ["zlib.createGunzip(", "zlib.gunzip(", "zlib.gunzipSync("] },
+  {
+    "query": "decompress gzip",
+    "relevant": ["zlib.createGunzip(", "zlib.gunzip(", "zlib.gunzipSync("]
+  },
   { "query": "text encoder", "relevant": ["Class: util.TextEncoder"] },
   { "query": "assert throws", "relevant": ["assert.throws(", "assert.rejects("] },
   { "query": "test before each hook", "relevant": ["beforeEach("] },

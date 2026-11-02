@@ -19,13 +19,18 @@ const { values } = parseArgs({
 
 const source = SOURCES[values.source];
 if (!source) {
-  console.error(`Fuente desconocida "${values.source}". Disponibles: ${Object.keys(SOURCES).join(', ')}`);
+  console.error(
+    `Fuente desconocida "${values.source}". Disponibles: ${Object.keys(SOURCES).join(', ')}`,
+  );
   process.exit(1);
 }
 
 const started = Date.now();
 const result = await crawl(source, {
-  fetcher: new PoliteFetcher({ userAgent: USER_AGENT, minIntervalMs: Number(values['interval-ms']) }),
+  fetcher: new PoliteFetcher({
+    userAgent: USER_AGENT,
+    minIntervalMs: Number(values['interval-ms']),
+  }),
   userAgent: USER_AGENT,
   concurrency: Number(values.concurrency),
   ...(values['max-pages'] ? { maxPages: Number(values['max-pages']) } : {}),

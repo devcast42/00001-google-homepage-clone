@@ -35,7 +35,13 @@ export interface CrawlResult {
  * así que dos rastreos del mismo contenido producen exactamente el mismo corpus.
  */
 export async function crawl(source: SourceConfig, options: CrawlOptions): Promise<CrawlResult> {
-  const { fetcher, userAgent, concurrency = 2, maxPages = source.maxPages, log = () => {} } = options;
+  const {
+    fetcher,
+    userAgent,
+    concurrency = 2,
+    maxPages = source.maxPages,
+    log = () => {},
+  } = options;
   const stats: CrawlStats = {
     pagesFetched: 0,
     pagesSkippedByRobots: 0,

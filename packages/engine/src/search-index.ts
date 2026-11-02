@@ -25,6 +25,8 @@ export interface SerializedIndex {
   readonly fieldLengths: readonly (readonly number[])[];
   readonly terms: readonly string[];
   readonly postings: readonly (readonly number[])[];
+  /** Forma habitual de los términos con mayúsculas (`readfile` → `readFile`). */
+  readonly displayForms?: Readonly<Record<string, string>>;
 }
 
 /**
@@ -102,6 +104,7 @@ export class SearchIndex {
   readonly #termIndex: ReadonlyMap<string, number>;
   readonly #postings: readonly Int32Array[];
   readonly #builtAt: string;
+  readonly #displayForms: Readonly<Record<string, string>>;
   readonly #ranking: RankingConfig;
   #termsByLength: Map<number, number[]> | undefined;
 
@@ -115,6 +118,7 @@ export class SearchIndex {
       this.#termIndex = source.#termIndex;
       this.#postings = source.#postings;
       this.#builtAt = source.#builtAt;
+      this.#displayForms = source.#displayForms;
       this.#termsByLength = source.#termsByLength;
       return;
     }
@@ -131,6 +135,7 @@ export class SearchIndex {
       return decoded;
     });
     this.#builtAt = source.builtAt;
+    this.#displayForms = source.displayForms ?? {};
   }
 
   /** Carga un índice serializado, validando su formato. */
@@ -312,7 +317,8 @@ export class SearchIndex {
         const correction = this.#bestCorrection([primary.term, surface]);
         if (correction) {
           add(correction.termIndex, this.#ranking.fuzzyWeights[correction.distance]!, true);
-          group.correction = this.#terms[correction.termIndex]!;
+          const term = this.#terms[correction.termIndex]!;
+          group.correction = Object.hasOwn(this.#displayForms, term) ? this.#displayForms[term]! : term;
         }
       }
 
@@ -386,7 +392,6 @@ export class SearchIndex {
   #groupTermsByLength(): Map<number, number[]> {
     const byLength = new Map<number, number[]>();
     this.#terms.forEach((term, index) => {
-      if (term.includes('.')) return;
       const list = byLength.get(term.length);
       if (list) list.push(index);
       else byLength.set(term.length, [index]);

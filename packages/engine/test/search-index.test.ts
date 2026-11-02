@@ -30,8 +30,9 @@ describe('SearchIndex.search', () => {
     expect(result.didYouMean).toBe('listener');
   });
 
-  it('keeps the rest of the query when building the correction', () => {
-    expect(index.search('http creatServer').didYouMean).toBe('http createserver');
+  it('keeps the rest of the query and shows corrections in their usual casing', () => {
+    expect(index.search('http creatServer').didYouMean).toBe('http createServer');
+    expect(index.search('fs.readFiel').didYouMean).toBe('fs.readFile');
   });
 
   it('does not correct words that exist', () => {

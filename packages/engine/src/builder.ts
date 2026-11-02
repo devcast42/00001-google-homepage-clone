@@ -21,6 +21,8 @@ export class IndexBuilder {
   readonly #fieldLengths: number[][] = FIELDS.map(() => []);
   /** término → [doc, tfTitle, tfBreadcrumbs, tfBody, doc, ...] */
   readonly #postings = new Map<string, number[]>();
+  /** término → (forma escrita → apariciones), para mostrar correcciones como `readFile`. */
+  readonly #surfaceForms = new Map<string, Map<string, number>>();
 
   /** Añade un documento. Lanza un error si el id está repetido. */
   add(document: SourceDocument): this {
@@ -40,7 +42,13 @@ export class IndexBuilder {
     FIELDS.forEach((field, fieldIndex) => {
       const tokens = tokenize(fieldTexts[field]);
       this.#fieldLengths[fieldIndex]!.push(tokens.filter((token) => token.primary).length);
-      for (const { term, primary } of tokens) {
+      for (const { term, primary, start, end } of tokens) {
+        // Las partes interiores de camelCase ("Listener" en `addListener`) tienen la
+        // mayúscula por estar dentro de otra palabra, no por cómo se escribe el término.
+        const text = fieldTexts[field];
+        if (primary || !/[\p{L}\p{N}]/u.test(text[start - 1] ?? '')) {
+          this.#countSurfaceForm(term, text.slice(start, end));
+        }
         let tf = frequencies.get(term);
         if (!tf) {
           tf = new Array<number>(FIELD_COUNT).fill(0);
@@ -62,6 +70,18 @@ export class IndexBuilder {
     }
 
     return this;
+  }
+
+  #countSurfaceForm(term: string, surface: string): void {
+    // Las formas que no coinciden con el término salvo mayúsculas (plurales reducidos
+    // por el stemmer, por ejemplo) no sirven para mostrarlo.
+    if (surface.toLowerCase() !== term) return;
+    let forms = this.#surfaceForms.get(term);
+    if (!forms) {
+      forms = new Map();
+      this.#surfaceForms.set(term, forms);
+    }
+    forms.set(surface, (forms.get(surface) ?? 0) + 1);
   }
 
   addAll(documents: Iterable<SourceDocument>): this {
@@ -89,6 +109,14 @@ export class IndexBuilder {
       return encoded;
     });
 
+    // Forma más habitual de cada término; solo se guarda si no es la minúscula,
+    // así que "readfile" → "readFile" sí, y "the" (frente a "The") no.
+    const displayForms: Record<string, string> = {};
+    for (const [term, forms] of this.#surfaceForms) {
+      const [surface] = [...forms].sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1))[0]!;
+      if (surface !== term) displayForms[term] = surface;
+    }
+
     return {
       version: INDEX_FORMAT_VERSION,
       builtAt: builtAt.toISOString(),
@@ -104,6 +132,7 @@ export class IndexBuilder {
       fieldLengths: this.#fieldLengths.map((lengths) => lengths.slice()),
       terms,
       postings,
+      displayForms,
     };
   }
 

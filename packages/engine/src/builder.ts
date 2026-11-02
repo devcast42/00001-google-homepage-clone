@@ -4,6 +4,10 @@ import { SearchIndex, type SerializedIndex, INDEX_FORMAT_VERSION } from './searc
 
 const FIELD_COUNT = FIELDS.length;
 
+/** Las frecuencias se guardan en medias unidades para poder ponderar sin usar decimales. */
+export const TF_PRIMARY = 2;
+export const TF_DERIVED = 1;
+
 /**
  * Construye un índice invertido a partir de documentos.
  *
@@ -36,13 +40,15 @@ export class IndexBuilder {
     FIELDS.forEach((field, fieldIndex) => {
       const tokens = tokenize(fieldTexts[field]);
       this.#fieldLengths[fieldIndex]!.push(tokens.filter((token) => token.primary).length);
-      for (const { term } of tokens) {
+      for (const { term, primary } of tokens) {
         let tf = frequencies.get(term);
         if (!tf) {
           tf = new Array<number>(FIELD_COUNT).fill(0);
           frequencies.set(term, tf);
         }
-        tf[fieldIndex]!++;
+        // Una palabra completa cuenta el doble que una parte de un identificador: "http"
+        // en `http.createServer` pesa más que el "http" de `Http1ServerResponse`.
+        tf[fieldIndex]! += primary ? TF_PRIMARY : TF_DERIVED;
       }
     });
 

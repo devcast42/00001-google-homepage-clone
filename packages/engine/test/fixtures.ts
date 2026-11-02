@@ -46,6 +46,12 @@ export const documents: SourceDocument[] = [
     'The process.env property returns an object containing the user environment. For example NODE_ENV is commonly used to select the configuration.',
   ),
   doc(
+    'path-basename',
+    'path.basename(path[, suffix])',
+    ['Path'],
+    'Returns the last portion of a path, similar to the Unix basename command.',
+  ),
+  doc(
     'mdn-fetch',
     'fetch()',
     ['Web APIs', 'Window'],

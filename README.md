@@ -4,13 +4,15 @@ Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 pu
 
 ## 🌟 Características
 
-- **Diseño responsivo** que se adapta a diferentes tamaños de pantalla
+- **Diseño responsivo** con media queries para móvil, tablet y escritorio
 - **Interfaz fiel** al diseño original de Google
 - **Efectos hover** en botones y barra de búsqueda
+- **Búsqueda funcional**: el formulario envía la consulta a Google (incluido "Me siento con suerte")
 - **Navegación superior** con enlaces a Gmail e Imágenes
 - **Footer informativo** con enlaces útiles
-- **Iconos integrados** para búsqueda y micrófono
-- **Favicon personalizado** de Google
+- **Iconos SVG integrados** (sin dependencias externas) para búsqueda, micrófono y aplicaciones
+- **Accesible**: etiquetas `aria-label`, foco visible y `lang="es"`
+- **Favicon** local
 
 ## 🚀 Demo en Vivo
 
@@ -20,8 +22,8 @@ Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 pu
 
 - **HTML5** - Estructura semántica
 - **CSS3** - Estilos y diseño responsivo
-- **Flexbox & Grid** - Layout moderno
-- **Google Fonts** - Tipografía
+- **Flexbox** - Layout moderno
+- **SVG inline** - Iconos y sin imágenes externas
 
 ## 📁 Estructura del Proyecto
 
@@ -39,24 +41,24 @@ Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 pu
 ### Header
 - Navegación superior con enlaces a Gmail e Imágenes
 - Menú de aplicaciones de Google
-- Avatar de usuario
+- Avatar de usuario (inicial)
 
 ### Sección Principal
-- Logo de Google centrado
+- Logo de Google centrado (texto con los colores de la marca)
 - Barra de búsqueda con iconos de lupa y micrófono
 - Botones "Buscar con Google" y "Me siento con suerte"
 - Efectos hover suaves
 
 ### Footer
 - Enlaces informativos divididos en dos secciones
-- Diseño fijo en la parte inferior
+- Siempre en la parte inferior sin tapar el contenido (layout flex de altura completa)
 - Estilo consistente con el tema de Google
 
 ## 🚀 Instalación y Uso
 
 1. **Clona el repositorio:**
    ```bash
-   git clone https://github.com/FROSTYLAN/00001-google-homepage-clone.git
+   git clone https://github.com/devcast42/00001-google-homepage-clone.git
    ```
 
 2. **Navega al directorio:**
@@ -80,17 +82,16 @@ El diseño está optimizado para:
 ## 🎯 Objetivos del Proyecto
 
 - Practicar **HTML semántico**
-- Dominar **CSS Flexbox y Grid**
+- Dominar **CSS Flexbox**
 - Implementar **efectos hover** y transiciones
 - Crear un **diseño pixel-perfect**
 - Desarrollar habilidades de **responsive design**
 
 ## 🔧 Posibles Mejoras
 
-- [ ] Añadir funcionalidad de búsqueda real
+- [x] Añadir funcionalidad de búsqueda real
 - [ ] Implementar modo oscuro
 - [ ] Agregar animaciones más avanzadas
-- [ ] Integrar con la API de Google Search
 - [ ] Añadir más páginas (resultados de búsqueda)
 
 ## 📄 Licencia
@@ -110,8 +111,8 @@ Las contribuciones son bienvenidas. Por favor:
 ## 👨‍💻 Autor
 
 **Charles Castillo**
-- GitHub: [@tu-usuario](https://github.com/FROSTYLAN)
-- LinkedIn: [Tu Perfil](https://linkedin.com/in/charles-castillo-772968234)
+- GitHub: [@FROSTYLAN](https://github.com/FROSTYLAN)
+- LinkedIn: [Charles Castillo](https://linkedin.com/in/charles-castillo-772968234)
 
 ---
 

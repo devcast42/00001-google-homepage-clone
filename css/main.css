@@ -1,150 +1,234 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   font-size: 13px;
-  font-family: Arial, Helvetica, Sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #202124;
 }
+
 a {
   text-decoration: none;
   cursor: pointer;
 }
+a:hover {
+  text-decoration: underline;
+}
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: 2px;
+}
 
+/* ---------- Header ---------- */
 header {
   width: 100%;
-  height: 60px;
+  min-height: 60px;
+  padding: 0 16px;
 }
 header nav {
   display: flex;
   justify-content: flex-end;
 }
-header nav .nav-right-section {
-  width: 250px;
-  height: auto;
+.nav-right-section {
   display: flex;
-  list-style: none;
-  justify-content: center;
   align-items: center;
+  gap: 15px;
+  margin: 10px 0;
+  padding: 0;
+  list-style: none;
 }
-nav .nav-right-section a {
-  margin-right: 10px;
-  color: #000000;
+.nav-right-section a {
+  color: rgba(0, 0, 0, 0.87);
 }
-nav .nav-right-section .menu-icon {
-  background-image: url("https://static.thenounproject.com/png/756729-200.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  width: 25px;
-  height: 25px;
-}
-nav .nav-right-section img {
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  margin-left: 10px;
+  color: #5f6368;
+}
+.icon-button:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+  text-decoration: none;
+}
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #1a73e8;
+  color: #fff !important;
+  font-size: 16px;
+}
+.avatar:hover {
+  text-decoration: none;
+  box-shadow: 0 0 0 4px rgba(60, 64, 67, 0.12);
 }
 
+/* ---------- Main ---------- */
 main {
-  margin-top: 150px;
+  flex: 1;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 120px 16px 40px;
   text-align: center;
 }
-main .main-logo {
-  width: 530px;
-  margin: 0 auto;
-  margin-bottom: 35px;
+
+.main-logo {
+  margin: 0 0 30px;
+  font-size: 92px;
+  font-weight: normal;
+  letter-spacing: -4px;
+  line-height: 1;
+  user-select: none;
 }
-main .main-logo img {
-  width: 300px;
+.g-blue {
+  color: #4285f4;
+}
+.g-red {
+  color: #ea4335;
+}
+.g-yellow {
+  color: #fbbc05;
+}
+.g-green {
+  color: #34a853;
 }
 
-main .main-input {
-  width: 530px;
-  margin: 0 auto;
-  margin-bottom: 35px;
-}
-main .main-input-container {
-  width: 525px;
-  border-radius: 100px;
+.main-input-container {
+  width: 100%;
+  max-width: 584px;
+  height: 46px;
+  margin: 0 auto 30px;
+  padding: 0 8px 0 14px;
   border: 1px solid #dfe1e5;
+  border-radius: 24px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 10px;
 }
-main .main-input input {
-  width: 450px;
-  height: 40px;
+.main-input-container:hover,
+.main-input-container:focus-within {
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+  border-color: transparent;
+}
+.main-input-container input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
   border: none;
-  outline: none; /* quita el estilo de input al darle clic */
+  outline: none; /* el foco se indica con la sombra del contenedor */
+  background: transparent;
+  font-size: 16px;
+  color: #202124;
 }
-main .main-input-container:hover {
-  box-shadow: 0 1px 6px 0 #20212447;
-  border-color: #dfe1e500;
-}
-main .main-input .search-icon {
-  background-image: url("https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_search_48px-512.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  width: 20px;
-  height: 20px;
-  opacity: 0.45;
-}
-main .main-input .micro-icon {
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Google_mic.svg/726px-Google_mic.svg.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  width: 20px;
-  height: 20px;
+.main-input-container input::-webkit-search-cancel-button {
   cursor: pointer;
 }
+.search-icon {
+  flex-shrink: 0;
+  color: #9aa0a6;
+}
 
-main .main-buttons {
-  width: 530px;
-  margin: 0 auto;
+.main-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
 }
-main .main-buttons div {
-  display: inline-block;
-}
-main .main-buttons button {
+.main-buttons button {
   height: 36px;
-  background-color: #f2f2f2;
-  border: 0;
+  padding: 0 16px;
+  background-color: #f8f9fa;
+  border: 1px solid #f8f9fa;
+  border-radius: 4px;
   font-size: 14px;
-  color: #5f6368;
-  border-radius: 5px;
-  padding: 0 15px;
-  margin-right: 15px;
+  color: #3c4043;
+  cursor: pointer;
 }
-main .main-buttons button:hover {
-  border: 1px solid #c6c6c6;
-  box-shadow: 0 1px 1px #000001;
-  color: #222;
+.main-buttons button:hover {
+  border-color: #dadce0;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  color: #202124;
 }
 
+/* ---------- Footer ---------- */
 footer {
   width: 100%;
-  height: 50px;
-  position: absolute;
-  bottom: 0;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
-  font-size: 13px;
+  padding: 0 20px;
+  font-size: 14px;
   background-color: #f2f2f2;
-  border-top: 1px solid #e4e4e4;
+  border-top: 1px solid #dadce0;
 }
 footer ul {
-  margin: 10px;
-  list-style: none;
   display: flex;
-  padding-left: 0;
-}
-footer .footer-left {
-  justify-self: left;
-}
-footer .footer-right {
-  justify-self: right;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 footer ul li a {
-  margin: 10px;
-  color: #5f6368;
+  display: inline-block;
+  padding: 15px;
+  color: #70757a;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  main {
+    padding-top: 60px;
+  }
+  .main-logo {
+    font-size: 72px;
+    letter-spacing: -3px;
+  }
+  footer {
+    justify-content: center;
+  }
+  footer ul {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 0 8px;
+  }
+  .nav-right-section {
+    gap: 8px;
+  }
+  main {
+    padding-top: 40px;
+  }
+  .main-logo {
+    font-size: 56px;
+    letter-spacing: -2px;
+  }
+  .main-buttons button {
+    flex: 1 1 100%;
+  }
+  footer {
+    padding: 0 8px;
+  }
+  footer ul li a {
+    padding: 10px;
+  }
 }

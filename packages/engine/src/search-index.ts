@@ -207,13 +207,16 @@ export class SearchIndex {
     // "AND suave": un documento que contiene todas las palabras de la consulta va por
     // delante de uno que solo contiene algunas, aunque estas aparezcan muchas veces.
     // Con pesos a 0 un documento puede coincidir sin puntuar; no es un resultado.
-    const ranked = [...scores].filter(([, score]) => score > 0).map(([doc, score]) => {
-      const coverage = matchedGroups.get(doc)! / groups.length;
-      const titleCoverage = (titleGroups.get(doc) ?? 0) / groups.length;
-      const depth = this.#documents[doc]!.breadcrumbs.length;
-      const boost = (1 + this.#ranking.titleBonus * titleCoverage) / (1 + this.#ranking.depthPenalty * depth);
-      return { doc, score: score * coverage * coverage * boost };
-    });
+    const ranked = [...scores]
+      .filter(([, score]) => score > 0)
+      .map(([doc, score]) => {
+        const coverage = matchedGroups.get(doc)! / groups.length;
+        const titleCoverage = (titleGroups.get(doc) ?? 0) / groups.length;
+        const depth = this.#documents[doc]!.breadcrumbs.length;
+        const boost =
+          (1 + this.#ranking.titleBonus * titleCoverage) / (1 + this.#ranking.depthPenalty * depth);
+        return { doc, score: score * coverage * coverage * boost };
+      });
     ranked.sort(
       (a, b) =>
         b.score - a.score ||
@@ -289,23 +292,34 @@ export class SearchIndex {
 
     const parsed = groups.map(({ primary, derived }, index): QueryGroup => {
       const terms = new Map<number, Omit<WeightedTerm, 'termIndex'>>();
-      const add = (termIndex: number | undefined, weight: number, alternative = false, idf?: number) => {
+      const add = (
+        termIndex: number | undefined,
+        weight: number,
+        alternative = false,
+        idf?: number,
+      ) => {
         if (termIndex === undefined) return;
         const existing = terms.get(termIndex);
         if (existing && existing.weight >= weight) return;
-        terms.set(termIndex, idf === undefined ? { weight, alternative } : { weight, alternative, idf });
+        terms.set(
+          termIndex,
+          idf === undefined ? { weight, alternative } : { weight, alternative, idf },
+        );
       };
 
       const exact = this.#termIndex.get(primary.term);
       add(exact, 1);
-      for (const token of derived) add(this.#termIndex.get(token.term), this.#ranking.derivedWeight);
+      for (const token of derived)
+        add(this.#termIndex.get(token.term), this.#ranking.derivedWeight);
 
       const expansions =
         prefix && index === groups.length - 1 ? this.#prefixExpansions(primary.term) : [];
       // Puntuación constante para las expansiones (como hace Lucene con las consultas
       // por prefijo): si no, la expansión más rara gana aunque sea la menos útil.
-      const expansionIdf = expansions[0] === undefined ? 0 : this.#idf(this.#documentFrequency(expansions[0]));
-      for (const termIndex of expansions) add(termIndex, this.#ranking.prefixWeight, true, expansionIdf);
+      const expansionIdf =
+        expansions[0] === undefined ? 0 : this.#idf(this.#documentFrequency(expansions[0]));
+      for (const termIndex of expansions)
+        add(termIndex, this.#ranking.prefixWeight, true, expansionIdf);
 
       const group: QueryGroup = { start: primary.start, end: primary.end, terms: [] };
       if (exact === undefined && expansions.length === 0) {
@@ -318,7 +332,9 @@ export class SearchIndex {
         if (correction) {
           add(correction.termIndex, this.#ranking.fuzzyWeights[correction.distance]!, true);
           const term = this.#terms[correction.termIndex]!;
-          group.correction = Object.hasOwn(this.#displayForms, term) ? this.#displayForms[term]! : term;
+          group.correction = Object.hasOwn(this.#displayForms, term)
+            ? this.#displayForms[term]!
+            : term;
         }
       }
 
@@ -335,7 +351,11 @@ export class SearchIndex {
       if (joined === undefined) continue;
       for (const group of [parsed[i - 1]!, parsed[i]!]) {
         if (!group.terms.some((term) => term.termIndex === joined)) {
-          group.terms.push({ termIndex: joined, weight: this.#ranking.joinedWeight, alternative: true });
+          group.terms.push({
+            termIndex: joined,
+            weight: this.#ranking.joinedWeight,
+            alternative: true,
+          });
         }
       }
     }
@@ -413,7 +433,8 @@ function buildCorrection(query: string, groups: readonly QueryGroup[]): string |
 }
 
 function assertSerializedIndex(data: unknown): asserts data is SerializedIndex {
-  if (typeof data !== 'object' || data === null) throw new TypeError('Índice inválido: no es un objeto');
+  if (typeof data !== 'object' || data === null)
+    throw new TypeError('Índice inválido: no es un objeto');
   const index = data as Partial<SerializedIndex>;
   if (index.version !== INDEX_FORMAT_VERSION) {
     throw new TypeError(

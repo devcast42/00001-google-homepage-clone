@@ -1,17 +1,19 @@
 import { describe, expect, it } from 'vitest';
 import { highlight, snippet } from '../src/index.js';
 
-const marked = ({ text, highlights }: { text: string; highlights: readonly (readonly [number, number])[] }) =>
-  highlights.map(([start, end]) => text.slice(start, end));
+const marked = ({
+  text,
+  highlights,
+}: {
+  text: string;
+  highlights: readonly (readonly [number, number])[];
+}) => highlights.map(([start, end]) => text.slice(start, end));
 
 describe('highlight', () => {
   it('returns ranges for every matching token', () => {
-    expect(marked(highlight('Reads the file. Files are read.', new Set(['file', 'read'])))).toEqual([
-      'Reads',
-      'file',
-      'Files',
-      'read',
-    ]);
+    expect(marked(highlight('Reads the file. Files are read.', new Set(['file', 'read'])))).toEqual(
+      ['Reads', 'file', 'Files', 'read'],
+    );
   });
 
   it('merges overlapping ranges from compound identifiers', () => {
@@ -39,6 +41,9 @@ describe('snippet', () => {
   });
 
   it('returns short texts untouched', () => {
-    expect(snippet('short text', new Set(['text']))).toEqual({ text: 'short text', highlights: [[6, 10]] });
+    expect(snippet('short text', new Set(['text']))).toEqual({
+      text: 'short text',
+      highlights: [[6, 10]],
+    });
   });
 });

@@ -41,8 +41,13 @@ describe('SearchIndex.search', () => {
 
   it('expands the last word as a prefix when asked', () => {
     expect(ids('rea')).toEqual([]);
-    expect(ids('rea', { prefix: true })).toEqual(expect.arrayContaining(['fs-readdir', 'fs-readfile']));
-    expect(ids('fs.rea', { prefix: true }).slice(0, 2).sort()).toEqual(['fs-readdir', 'fs-readfile']);
+    expect(ids('rea', { prefix: true })).toEqual(
+      expect.arrayContaining(['fs-readdir', 'fs-readfile']),
+    );
+    expect(ids('fs.rea', { prefix: true }).slice(0, 2).sort()).toEqual([
+      'fs-readdir',
+      'fs-readfile',
+    ]);
   });
 
   it('joins adjacent words that form an indexed term', () => {
@@ -109,7 +114,10 @@ describe('serialization', () => {
     const builder = new IndexBuilder().addAll(documents);
     const restored = SearchIndex.fromJSON(JSON.parse(JSON.stringify(builder.serialize())));
     expect(restored.search('read file')).toEqual(index.search('read file'));
-    expect(restored.stats()).toMatchObject({ documents: documents.length, sources: { nodejs: 7, mdn: 1 } });
+    expect(restored.stats()).toMatchObject({
+      documents: documents.length,
+      sources: { nodejs: 7, mdn: 1 },
+    });
   });
 
   it('rejects unknown versions and malformed data', () => {

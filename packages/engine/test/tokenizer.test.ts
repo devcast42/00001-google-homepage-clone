@@ -53,6 +53,9 @@ describe('stem', () => {
     ['status', 'status'],
     ['options', 'option'],
     ['fs', 'fs'],
+    ['https', 'https'],
+    ['alias', 'alias'],
+    ['series', 'series'],
   ])('%s → %s', (word, expected) => {
     expect(stem(word)).toBe(expected);
   });

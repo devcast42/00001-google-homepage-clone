@@ -144,6 +144,8 @@ Los errores siempre tienen la forma `{ "error": { "code": "invalid_request" | "r
 
 ## Calidad
 
+Las pruebas e2e necesitan el navegador de Playwright. La primera vez, descárgalo con `npx playwright install chromium`.
+
 ```bash
 npm run lint             # ESLint (incluidas las reglas de hooks de React) + Prettier
 npm run typecheck        # TypeScript estricto en código, pruebas y benchmarks

@@ -39,8 +39,19 @@ describe('SearchIndex.search', () => {
     expect(index.search('listener').didYouMean).toBeUndefined();
   });
 
+  it('completes words that do not exist instead of returning nothing', () => {
+    const result = index.search('liste');
+    expect(result.hits[0]?.id).toBe('events-on');
+    expect(result.didYouMean).toBe('listener');
+  });
+
+  it('prefers completing a partial word over correcting it to a different word', () => {
+    // "writ" está a una letra de "with", pero quien lo escribe busca `writeFile`.
+    expect(index.search('writ').hits[0]?.id).toBe('fs-writefile');
+  });
+
   it('expands the last word as a prefix when asked', () => {
-    expect(ids('rea')).toEqual([]);
+    expect(ids('zzq')).toEqual([]);
     expect(ids('rea', { prefix: true })).toEqual(
       expect.arrayContaining(['fs-readdir', 'fs-readfile']),
     );

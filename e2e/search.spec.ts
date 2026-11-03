@@ -50,6 +50,12 @@ test.describe('búsqueda', () => {
     await expect(page.getByRole('status')).toContainText('página 1');
   });
 
+  test('completa palabras a medio escribir', async ({ page }) => {
+    await page.goto('/?q=asy');
+    await expect(page.locator('.result').first()).toContainText('Async');
+    await expect(page.locator('.results__correction')).toContainText('async');
+  });
+
   test('explica cuando no hay resultados', async ({ page }) => {
     await page.goto('/?q=zzqqxxyy');
     await expect(page.getByText('No hay secciones que coincidan')).toBeVisible();

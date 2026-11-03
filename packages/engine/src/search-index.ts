@@ -312,8 +312,19 @@ export class SearchIndex {
       for (const token of derived)
         add(this.#termIndex.get(token.term), this.#ranking.derivedWeight);
 
-      const expansions =
+      const surface = normalize(query.slice(primary.start, primary.end));
+      const group: QueryGroup = { start: primary.start, end: primary.end, terms: [] };
+
+      // Prefijos: la última palabra en modo autocompletar, y cualquier palabra que no
+      // existe en el índice, porque lo más probable es que esté a medio escribir
+      // ("asy" → `async`, "prom" → `promise`). Solo si ninguna palabra empieza así se
+      // trata como una errata; si no, "prom" se "corregiría" a `from`.
+      let expansions =
         prefix && index === groups.length - 1 ? this.#prefixExpansions(primary.term) : [];
+      if (exact === undefined && expansions.length === 0) {
+        expansions = this.#prefixExpansions(surface);
+        if (expansions[0] !== undefined) group.correction = this.#displayForm(expansions[0]);
+      }
       // Puntuación constante para las expansiones (como hace Lucene con las consultas
       // por prefijo): si no, la expansión más rara gana aunque sea la menos útil.
       const expansionIdf =
@@ -321,20 +332,15 @@ export class SearchIndex {
       for (const termIndex of expansions)
         add(termIndex, this.#ranking.prefixWeight, true, expansionIdf);
 
-      const group: QueryGroup = { start: primary.start, end: primary.end, terms: [] };
       if (exact === undefined && expansions.length === 0) {
         // Se compara tanto la forma con stemming como la escrita: "proces" se reduce a
         // "proce", que está más cerca de "probe" que de "process".
-        const surface = normalize(query.slice(primary.start, primary.end));
         // Solo se usa la mejor corrección, que es también la que se muestra en
         // "¿Quisiste decir…?": así los resultados y la sugerencia son coherentes.
         const correction = this.#bestCorrection([primary.term, surface]);
         if (correction) {
           add(correction.termIndex, this.#ranking.fuzzyWeights[correction.distance]!, true);
-          const term = this.#terms[correction.termIndex]!;
-          group.correction = Object.hasOwn(this.#displayForms, term)
-            ? this.#displayForms[term]!
-            : term;
+          group.correction = this.#displayForm(correction.termIndex);
         }
       }
 
@@ -361,6 +367,11 @@ export class SearchIndex {
     }
 
     return parsed;
+  }
+
+  #displayForm(termIndex: number): string {
+    const term = this.#terms[termIndex]!;
+    return Object.hasOwn(this.#displayForms, term) ? this.#displayForms[term]! : term;
   }
 
   #documentFrequency(termIndex: number): number {

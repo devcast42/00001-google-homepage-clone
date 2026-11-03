@@ -22,7 +22,7 @@ Las cifras se reproducen con `npm run bench:latency` y `npm run bench:relevance`
 ## Qué hace
 
 - **Entiende código**: "readFile", "read file" y "fs.readFile" encuentran `fs.readFile()`; "base name" encuentra `path.basename()`.
-- **Corrige erratas**: "chld proces spawn" → `child_process.spawn()`, con "¿Quisiste decir _child process_?".
+- **Corrige erratas**: "readFiel" → `fs.readFile()`, con "¿Quisiste decir _readFile_?"; "chld proces" → "¿Quisiste decir _child process_?".
 - **Autocompletado accesible** mientras escribes (patrón _combobox_ de WAI-ARIA, todo con teclado, `/` para enfocar).
 - **Lleva a la sección exacta** (`nodejs.org/api/fs.html#fsreadfilepath-options-callback`), con la ruta de encabezados y un fragmento con las coincidencias resaltadas.
 - **URLs compartibles** (`/?q=readFile&page=2`); los botones atrás y adelante funcionan.

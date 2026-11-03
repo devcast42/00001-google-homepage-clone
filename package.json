@@ -18,7 +18,7 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test",
+    "test:e2e": "npm run build && npm run index && playwright test",
     "crawl": "npm run crawl -w @docseek/crawler --",
     "index": "npm run index -w @docseek/crawler --",
     "dev": "npm run index && concurrently -n api,web -c blue,magenta \"npm run dev -w @docseek/api\" \"npm run dev -w @docseek/web\"",

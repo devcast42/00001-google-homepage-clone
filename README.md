@@ -148,7 +148,7 @@ Los errores siempre tienen la forma `{ "error": { "code": "invalid_request" | "r
 npm run lint             # ESLint (incluidas las reglas de hooks de React) + Prettier
 npm run typecheck        # TypeScript estricto en código, pruebas y benchmarks
 npm run test:coverage    # Vitest con umbrales de cobertura
-npm run test:e2e         # Playwright + axe (requiere build e index)
+npm run test:e2e         # Playwright + axe (compila y genera el índice antes)
 npm run bench:relevance  # Success@1/3 y MRR; -- --set holdout para validación
 npm run bench:latency    # p50/p95/p99 de búsqueda y autocompletado
 npm run bench:tune       # ajuste de parámetros del ranking

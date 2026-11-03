@@ -4,7 +4,7 @@ const PORT = 4173;
 
 /**
  * Pruebas de extremo a extremo contra el servidor real: API + frontend compilado +
- * índice completo. Requiere `npm run build` y `npm run index` antes.
+ * índice completo. `npm run test:e2e` compila y genera el índice antes de ejecutarlas.
  */
 export default defineConfig({
   testDir: 'e2e',

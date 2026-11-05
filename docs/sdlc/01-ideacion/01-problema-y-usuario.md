@@ -2,7 +2,7 @@
 
 > **La pregunta:** ¿qué dolor específico resolvemos, y para quién?
 
-- **Estado:** 🟡 Hipótesis (versión 2). Enfoque definido, pero sin validar con usuarios reales.
+- **Estado:** 🟡 Hipótesis (versión 3). Enfoque y necesidades definidos; falta validarlo con usuarios reales.
 - **Producto:** DocSeek Lens.
 
 ---
@@ -39,7 +39,7 @@ Ya no escriben el código: lo **piden en lenguaje natural** y lo reciben hecho.
 
 ### Frase del problema
 
-> **Para** programadores sin fundamentos sólidos que construyen software con agentes de IA,
+> **Para** programadores sin fundamentos sólidos que construyen software con agentes de IA y **quieren aprender sin perder velocidad**,
 > **el problema es** que reciben código que funciona pero que no entienden: no saben por qué es así ni de dónde sale cada parte,
 > **lo que hoy resuelven** pidiéndole a la misma IA que se lo explique, sin poder comprobar la respuesta, o aceptándolo sin entenderlo,
 > **y les cuesta** no poder revisar ni arreglar su propio código, y no aprender los fundamentos.
@@ -50,25 +50,36 @@ Explica el código **con la documentación oficial como fuente**: qué es cada p
 
 ---
 
-## 2. Lo que todavía no sabemos
+## 2. Lo que ya decidimos
 
-- [ ] ¿Esta persona **quiere aprender**, o solo quiere que el código funcione? Si solo quiere que funcione, no usará una herramienta para entender.
-- [ ] ¿**En qué momento** lo usaría: al recibir el código, cuando algo falla, al revisar antes de subirlo?
-- [ ] ¿Le basta con **enlaces a la documentación**, o necesita **explicaciones en palabras sencillas**? La documentación oficial es técnica y puede ser difícil para alguien sin fundamentos.
-- [ ] ¿Qué le cuesta más entender: **funciones de Node** (`fs.readFile`), **conceptos** (streams, promesas, event loop) o **el propio lenguaje** (`async/await`, desestructuración)?
-- [ ] ¿Lo usaría **fuera** de su editor, o tiene que estar **dentro** de donde ya trabaja con la IA?
-- [ ] ¿Solo Node.js es suficiente para empezar?
+Respuestas a las preguntas abiertas de la versión anterior:
 
-## 3. Lo que esto cambia en el producto
+| Pregunta                                               | Respuesta                                                                                                                                      |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| ¿Quiere aprender o solo que funcione?                  | **Quiere aprender, pero sin perder velocidad.** Nada de cursos: explicaciones cortas, al momento.                                              |
+| ¿Explicaciones sencillas o enlaces a la documentación? | **Las dos cosas juntas.** La explicación sencilla para entender rápido; el enlace oficial para comprobar y profundizar.                        |
+| ¿Qué le cuesta entender?                               | **Todo:** funciones (`fs.readFile`), conceptos (streams, promesas, event loop) y cosas del propio lenguaje (`async/await`, desestructuración). |
+| ¿Dentro o fuera del editor?                            | **Fuera.** DocSeek es un buscador: se usa en una web, pegando el código.                                                                       |
+| ¿Solo Node.js?                                         | **Se empieza con Node** porque ya tenemos sus datos. Después **se añaden tecnologías** incorporando su documentación a los datos.              |
+
+## 3. Lo que todavía no sabemos
+
+- [ ] ¿**En qué momento** lo usaría: al recibir el código de la IA, cuando algo falla, o al revisar antes de subirlo?
+- [ ] ¿Pegaría **código de su empresa** en una web, o eso le frena?
+- [ ] ¿Cuál es la **siguiente tecnología** que más falta haría después de Node: JavaScript (MDN), TypeScript, React, Express…?
+- [ ] ¿Qué significa "**sin perder velocidad**" en la práctica: cuánto está dispuesto a esperar y cuánto a leer?
+
+## 4. Lo que esto cambia en el producto
 
 Notas para la fase de requisitos, no decisiones todavía:
 
+- **"Sin perder velocidad" pide explicaciones por capas:** primero una frase corta que se lee en dos segundos y, solo si quiere, más detalle y el enlace a la documentación.
 - **Explicar conceptos pesa más que detectar APIs obsoletas.** Lo obsoleto sigue siendo útil, pero ya no es lo principal.
-- **El "por qué" necesita palabras sencillas.** Los enlaces a nodejs.org son la fuente que da confianza, pero probablemente no bastan: la versión con explicaciones (la "versión 2" de Lens) pasa a ser importante, siempre citando la documentación.
-- **El índice actual solo tiene Node.js.** Gran parte de lo que esta persona no entiende es del propio lenguaje JavaScript (`async/await`, `map`, `Promise`), que está en MDN, no en nodejs.org. Habrá que añadir esa fuente.
-- **Encaja con trabajar dentro del agente de IA** (la idea del servidor MCP): explicar el código justo donde se genera.
+- **Las explicaciones sencillas necesitan IA**, pero siempre citando la documentación oficial, para que se puedan comprobar. Así deja de ser "preguntarle a la IA que escribió el código".
+- **Las cosas del lenguaje están en MDN, no en nodejs.org.** Para explicar `async/await` hará falta añadir esa fuente pronto, aunque se empiece con Node.
+- **Las tecnologías tienen que poder añadirse** sin rehacer el producto. El rastreador ya está preparado: cada fuente nueva es una entrada en su configuración y un extractor para su web.
 
-## 4. Primer usuario: yo
+## 5. Primer usuario: yo
 
 Durante este proyecto, construido con un agente de IA, me pasó exactamente esto:
 
@@ -77,17 +88,18 @@ Durante este proyecto, construido con un agente de IA, me pasó exactamente esto
 - Una explicación técnica de la fase 0 fue tan densa que no entendí nada.
 - Aun así, probando el producto encontré un fallo real (buscar `asy` no daba resultados): el criterio sí lo tenía, me faltaba el contexto.
 
-## 5. Cómo comprobarlo
+## 6. Cómo comprobarlo
 
 1. Hablar con **5 personas** que programen con agentes de IA y se consideren junior o sin una base fuerte. Preguntas:
    - "Cuéntame la última vez que la IA te dio código que no entendías. ¿Qué hiciste?"
    - "¿Alguna vez algo falló y no supiste por qué?"
-   - "¿Te importa entender el código, o te basta con que funcione?"
-   - "Si pudieras entenderlo mejor, ¿dónde lo querrías: en tu editor, en una web, en el chat con la IA?"
+   - "¿En qué momento te gustaría entender mejor el código: al recibirlo, cuando falla, antes de subirlo?"
+   - "¿Pegarías código de tu trabajo en una web para que te lo explique?"
+   - "¿Con qué otra tecnología, además de Node, te pasa más?"
 2. Apuntar sus respuestas abajo, con sus palabras.
 3. Reescribir la frase del problema con lo aprendido.
 
-## 6. Lo que aprendimos de los usuarios
+## 7. Lo que aprendimos de los usuarios
 
 | Persona (perfil) | Lo que contó | ¿Confirma o contradice la hipótesis? |
 | ---------------- | ------------ | ------------------------------------ |

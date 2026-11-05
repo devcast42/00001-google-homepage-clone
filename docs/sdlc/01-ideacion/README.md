@@ -4,4 +4,4 @@ Antes de construir nada, entender **qué dolor resolvemos y para quién**. Si es
 
 | Documento                                                 | Estado                             |
 | --------------------------------------------------------- | ---------------------------------- |
-| [01 — El problema y el usuario](01-problema-y-usuario.md) | 🟡 En curso: hipótesis sin validar |
+| [01 — El problema y el usuario](01-problema-y-usuario.md) | 🟡 Versión 2: enfoque definido, sin validar con usuarios |

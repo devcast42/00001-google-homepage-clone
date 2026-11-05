@@ -2,85 +2,92 @@
 
 > **La pregunta:** ¿qué dolor específico resolvemos, y para quién?
 
-- **Estado:** 🟡 Hipótesis. Nada de esto está comprobado con usuarios reales todavía.
-- **Producto:** DocSeek Lens (pegar código y entender qué usa, con la documentación oficial al lado).
+- **Estado:** 🟡 Hipótesis (versión 2). Enfoque definido, pero sin validar con usuarios reales.
+- **Producto:** DocSeek Lens.
 
 ---
 
-## 1. Hipótesis inicial (borrador)
-
-Este borrador sale de las conversaciones del proyecto. Sirve como punto de partida para discutir, no como respuesta.
+## 1. Hipótesis
 
 ### ¿Para quién?
 
-Personas que trabajan con **código de Node.js que no escribieron ellas**:
+**Programadores que construyen software hablándole a un agente de IA** (Claude Code, Cursor, Copilot…) **y que no tienen fundamentos sólidos**, sea porque están empezando o porque la IA usa cosas que nunca vieron.
 
-- Quien entra en un proyecto nuevo y tiene que entender código que ya existe.
-- Quien hereda código antiguo y tiene que actualizarlo.
-- Quien recibe código generado por una IA y tiene que decidir si se puede confiar en él.
+Ya no escriben el código: lo **piden en lenguaje natural** y lo reciben hecho.
 
 ### ¿Qué le duele?
 
-1. **No sabe qué hace cada parte del código** y tiene que buscar en la documentación una función tras otra, a mano.
-2. **No sabe si el código usa cosas viejas o que ya no existen.** Lo descubre cuando algo falla, a menudo en producción.
-3. **Las IA explican el código, pero no siempre aciertan** y no dicen de dónde sacan la información, así que no puede comprobarlo.
+**El código funciona (o casi), pero no lo entiende.** Y eso trae problemas concretos:
+
+1. **No sabe por qué el código es así.** Ve `fs.createReadStream(...).pipe(...)` y no sabe qué es un stream ni por qué no se usó algo más simple.
+2. **No sabe de dónde sale cada cosa**: qué es de Node, qué es del lenguaje, qué es de una librería y qué se inventó la IA.
+3. **No puede revisar lo que le entrega la IA.** Si no entiende el código, no sabe si es correcto, seguro o si usa algo obsoleto.
+4. **Cuando algo falla, no sabe arreglarlo**, y vuelve a pedírselo a la IA, que a veces lo empeora.
+5. **No aprende.** Pasa el tiempo y sigue dependiendo de la IA para todo, sin ganar los fundamentos.
 
 ### ¿Cómo lo resuelve hoy?
 
-- Busca cada función en Google o en nodejs.org.
-- Le pregunta a un chat de IA y espera que acierte.
-- Le pregunta a un compañero, si tiene uno.
-- Ejecuta el código y espera a ver qué se rompe.
+- Le pide a la misma IA que se lo explique. Pero la explicación puede estar mal, no cita fuentes y no hay forma de comprobarla.
+- Busca cada cosa en Google, una por una.
+- No lo resuelve: acepta el código sin entenderlo y sigue adelante.
 
 ### ¿Por qué esto no basta?
 
-- Buscar a mano es lento: con 20 funciones son 20 búsquedas.
-- La IA puede inventarse cosas y no deja comprobarlas.
-- Las advertencias de "esto está obsoleto" están en la documentación, pero nadie las lee hasta que algo falla.
+- Preguntar a la IA que escribió el código es pedirle que se revise a sí misma.
+- Buscar una por una es lento, y no explica **cómo encajan** las piezas.
+- Aceptar sin entender acumula código que nadie sabe mantener.
 
-### Frase del problema (borrador)
+### Frase del problema
 
-> **Para** desarrolladores que trabajan con código de Node.js que no escribieron,
-> **el problema es** que entender qué usa ese código y si sigue siendo correcto obliga a buscar función por función,
-> **lo que hoy resuelven** buscando a mano o preguntando a una IA sin poder comprobar la respuesta,
-> **y les cuesta** tiempo, y errores que descubren tarde.
+> **Para** programadores sin fundamentos sólidos que construyen software con agentes de IA,
+> **el problema es** que reciben código que funciona pero que no entienden: no saben por qué es así ni de dónde sale cada parte,
+> **lo que hoy resuelven** pidiéndole a la misma IA que se lo explique, sin poder comprobar la respuesta, o aceptándolo sin entenderlo,
+> **y les cuesta** no poder revisar ni arreglar su propio código, y no aprender los fundamentos.
+
+### Qué hace DocSeek Lens por ellos
+
+Explica el código **con la documentación oficial como fuente**: qué es cada parte, por qué está ahí y de dónde sale, con el enlace para comprobarlo. Así la persona aprende mientras trabaja.
 
 ---
 
 ## 2. Lo que todavía no sabemos
 
-Cada punto es un supuesto que podría ser falso:
+- [ ] ¿Esta persona **quiere aprender**, o solo quiere que el código funcione? Si solo quiere que funcione, no usará una herramienta para entender.
+- [ ] ¿**En qué momento** lo usaría: al recibir el código, cuando algo falla, al revisar antes de subirlo?
+- [ ] ¿Le basta con **enlaces a la documentación**, o necesita **explicaciones en palabras sencillas**? La documentación oficial es técnica y puede ser difícil para alguien sin fundamentos.
+- [ ] ¿Qué le cuesta más entender: **funciones de Node** (`fs.readFile`), **conceptos** (streams, promesas, event loop) o **el propio lenguaje** (`async/await`, desestructuración)?
+- [ ] ¿Lo usaría **fuera** de su editor, o tiene que estar **dentro** de donde ya trabaja con la IA?
+- [ ] ¿Solo Node.js es suficiente para empezar?
 
-- [ ] ¿Es un dolor **frecuente** o pasa pocas veces al año?
-- [ ] ¿Quién lo sufre más: alguien que empieza, alguien con experiencia, alguien que revisa código de otros?
-- [ ] ¿Les importa más **entender** el código o **detectar problemas** (APIs obsoletas)?
-- [ ] ¿Ya usan algo que lo resuelve (el editor, una extensión, ChatGPT, Copilot) y están contentos?
-- [ ] ¿Pegarían código de su empresa en una web, o eso les frena?
-- [ ] ¿Solo Node.js es suficiente, o el dolor está en otros lenguajes o librerías (Express, React…)?
+## 3. Lo que esto cambia en el producto
 
-## 3. Preguntas para ti
+Notas para la fase de requisitos, no decisiones todavía:
 
-Respóndelas con tu experiencia real, aunque sea corta:
+- **Explicar conceptos pesa más que detectar APIs obsoletas.** Lo obsoleto sigue siendo útil, pero ya no es lo principal.
+- **El "por qué" necesita palabras sencillas.** Los enlaces a nodejs.org son la fuente que da confianza, pero probablemente no bastan: la versión con explicaciones (la "versión 2" de Lens) pasa a ser importante, siempre citando la documentación.
+- **El índice actual solo tiene Node.js.** Gran parte de lo que esta persona no entiende es del propio lenguaje JavaScript (`async/await`, `map`, `Promise`), que está en MDN, no en nodejs.org. Habrá que añadir esa fuente.
+- **Encaja con trabajar dentro del agente de IA** (la idea del servidor MCP): explicar el código justo donde se genera.
 
-1. **¿Te ha pasado a ti?** Cuenta una vez concreta en la que tuviste que entender código ajeno o viejo. ¿Qué hiciste? ¿Cuánto tardaste?
-2. **¿Quién es tu usuario ideal?** Si solo pudieras ayudar a un tipo de persona, ¿cuál sería?
-3. **¿Qué te molesta más:** no entender el código, o no saber si está mal?
-4. **¿Conoces a 3–5 personas** que podrían tener este problema y con las que puedas hablar 15 minutos?
+## 4. Primer usuario: yo
 
-## 4. Cómo comprobarlo
+Durante este proyecto, construido con un agente de IA, me pasó exactamente esto:
 
-Antes de pasar a requisitos:
+- El agente usó Playwright y tuve que preguntar qué era y por qué se usa.
+- No entendía qué significaba `getByRole('combobox')` en una prueba.
+- Una explicación técnica de la fase 0 fue tan densa que no entendí nada.
+- Aun así, probando el producto encontré un fallo real (buscar `asy` no daba resultados): el criterio sí lo tenía, me faltaba el contexto.
 
-1. Hablar con **5 personas** que encajen con el usuario. No para venderles la idea, sino para preguntar cómo trabajan:
-   - "Cuéntame la última vez que tuviste que entender código que no era tuyo."
-   - "¿Qué hiciste? ¿Qué fue lo más molesto?"
-   - "¿Usas alguna herramienta para eso? ¿Qué le falta?"
-2. Apuntar sus respuestas en este documento, en la sección de abajo, con sus palabras exactas.
-3. Reescribir la frase del problema con lo aprendido. Si nadie tiene el problema, **cambiar de idea es un buen resultado**, no un fracaso.
+## 5. Cómo comprobarlo
 
-## 5. Lo que aprendimos de los usuarios
+1. Hablar con **5 personas** que programen con agentes de IA y se consideren junior o sin una base fuerte. Preguntas:
+   - "Cuéntame la última vez que la IA te dio código que no entendías. ¿Qué hiciste?"
+   - "¿Alguna vez algo falló y no supiste por qué?"
+   - "¿Te importa entender el código, o te basta con que funcione?"
+   - "Si pudieras entenderlo mejor, ¿dónde lo querrías: en tu editor, en una web, en el chat con la IA?"
+2. Apuntar sus respuestas abajo, con sus palabras.
+3. Reescribir la frase del problema con lo aprendido.
 
-_Vacío. Se completa después de las entrevistas._
+## 6. Lo que aprendimos de los usuarios
 
 | Persona (perfil) | Lo que contó | ¿Confirma o contradice la hipótesis? |
 | ---------------- | ------------ | ------------------------------------ |

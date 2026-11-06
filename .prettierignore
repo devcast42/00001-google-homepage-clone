@@ -1,0 +1,8 @@
+dist/
+coverage/
+data/
+package-lock.json
+playwright-report/
+test-results/
+**/test/fixtures/
+spikes/

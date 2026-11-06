@@ -1,119 +1,175 @@
-# 🔍 Google Homepage Clone
+# DocSeek
 
-Un clon fiel de la página principal de Google, desarrollado con HTML5 y CSS3 puro. Este proyecto replica la interfaz de usuario de Google con atención al detalle en el diseño y la funcionalidad visual.
+Buscador de documentación técnica escrito en TypeScript: **rastreador**, **motor de búsqueda propio** (índice invertido + BM25F), **API** y **frontend**. Busca entre las 5.000 secciones de la documentación de la API de Node.js, con autocompletado, tolerancia a erratas y enlaces directos a cada sección. Cada búsqueda tarda unos 2 ms.
 
-## 🌟 Características
+[![CI](https://github.com/devcast42/00001-google-homepage-clone/actions/workflows/ci.yml/badge.svg)](https://github.com/devcast42/00001-google-homepage-clone/actions/workflows/ci.yml)
 
-- **Diseño responsivo** con media queries para móvil, tablet y escritorio
-- **Interfaz fiel** al diseño original de Google
-- **Efectos hover** en botones y barra de búsqueda
-- **Búsqueda funcional**: el formulario envía la consulta a Google (incluido "Me siento con suerte")
-- **Navegación superior** con enlaces a Gmail e Imágenes
-- **Footer informativo** con enlaces útiles
-- **Iconos SVG integrados** (sin dependencias externas) para búsqueda, micrófono y aplicaciones
-- **Accesible**: etiquetas `aria-label`, foco visible y `lang="es"`
-- **Favicon** local
+![Resultados de búsqueda para "create http server"](docs/screenshot-results.png)
 
-## 🚀 Demo en Vivo
+## En números
 
-🔗 **[Ver Demo](https://00001-google-homepage-clone.netlify.app/)**
+|                      |                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------- |
+| Corpus               | 5.013 secciones de 68 páginas de [nodejs.org/api](https://nodejs.org/api/)       |
+| Índice               | 18.045 términos · 6,5 MB · se carga en ~65 ms · ~33 MB de memoria                |
+| Latencia del motor   | búsqueda p50 **2,1 ms** · p95 **4,6 ms** · autocompletado p95 5,3 ms             |
+| Calidad (validación) | acierto en el 1.º resultado **60 %** · en los 3 primeros **80 %** · MRR **0,70** |
+| Pruebas              | 119 unitarias/integración · 22 e2e en escritorio y móvil · WCAG 2.1 AA con axe   |
+| Cobertura            | 96 % de líneas · 88 % de ramas                                                   |
 
-## 🛠️ Tecnologías Utilizadas
+Las cifras se reproducen con `npm run bench:latency` y `npm run bench:relevance`. La metodología está en [ADR 0004](docs/adr/0004-ranking.md).
 
-- **HTML5** - Estructura semántica
-- **CSS3** - Estilos y diseño responsivo
-- **Flexbox** - Layout moderno
-- **SVG inline** - Iconos y sin imágenes externas
+## Qué hace
 
-## 📁 Estructura del Proyecto
+- **Entiende código**: "readFile", "read file" y "fs.readFile" encuentran `fs.readFile()`; "base name" encuentra `path.basename()`.
+- **Corrige erratas**: "readFiel" → `fs.readFile()`, con "¿Quisiste decir _readFile_?"; "chld proces" → "¿Quisiste decir _child process_?".
+- **Autocompletado accesible** mientras escribes (patrón _combobox_ de WAI-ARIA, todo con teclado, `/` para enfocar).
+- **Lleva a la sección exacta** (`nodejs.org/api/fs.html#fsreadfilepath-options-callback`), con la ruta de encabezados y un fragmento con las coincidencias resaltadas.
+- **URLs compartibles** (`/?q=readFile&page=2`); los botones atrás y adelante funcionan.
+- Modo claro y oscuro, diseño adaptado a móvil, sin desbordes, respeta `prefers-reduced-motion`.
 
+![Autocompletado en modo oscuro](docs/screenshot-autocomplete.png)
+
+## Arquitectura
+
+```mermaid
+flowchart LR
+    subgraph offline["Construcción (offline)"]
+        W[nodejs.org/api] -->|crawl<br/>robots.txt, ritmo, reintentos| C[(data/corpus<br/>*.jsonl.gz<br/>versionado)]
+        C -->|index| I[(data/index.json)]
+    end
+    subgraph runtime["Ejecución"]
+        I -->|carga al arrancar| A[API Fastify<br/>validación · caché LRU<br/>rate limit · CSP]
+        A -->|/api/search<br/>/api/suggest| B[React SPA]
+        A -->|estáticos| B
+    end
 ```
-00001-google-homepage-clone/
-├── css/
-│   └── main.css          # Estilos principales
-├── index.html             # Página principal
-├── icon.png              # Favicon de Google
-└── README.md             # Documentación
+
+| Paquete                                  | Qué contiene                                                                                                                                                                        |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`packages/engine`](packages/engine/src) | Motor sin dependencias: tokenizador para código, índice invertido con publicaciones delta-codificadas, BM25F, corrección con Levenshtein acotado, prefijos y fragmentos resaltados. |
+| [`apps/crawler`](apps/crawler/src)       | Rastreador: robots.txt (RFC 9309), límite de ritmo por host, reintentos con backoff y `Retry-After`, deduplicación y extracción por secciones.                                      |
+| [`apps/api`](apps/api/src)               | API Fastify: esquemas JSON, paginación, caché LRU con TTL, rate limit, `Server-Timing`, cabeceras de seguridad y CSP, health checks y apagado ordenado.                             |
+| [`apps/web`](apps/web/src)               | React 19 + Vite: autocompletado accesible, estado en la URL, peticiones cancelables, tipos compartidos con el motor.                                                                |
+| [`bench`](bench)                         | Evaluación de calidad (Success@k, MRR), ajuste de parámetros y latencia.                                                                                                            |
+| [`e2e`](e2e)                             | Playwright en escritorio y móvil, y auditoría de accesibilidad con axe.                                                                                                             |
+
+### Decisiones técnicas
+
+- [ADR 0001 — Arquitectura y por qué un motor propio](docs/adr/0001-arquitectura.md)
+- [ADR 0002 — Tokenización para código](docs/adr/0002-tokenizacion.md)
+- [ADR 0003 — Rastreador respetuoso](docs/adr/0003-rastreador.md)
+- [ADR 0004 — Ranking guiado por métricas](docs/adr/0004-ranking.md)
+
+## Puesta en marcha
+
+Requisitos: Node.js 22.12 o superior.
+
+```bash
+npm ci
+npm run dev        # genera el índice y arranca la API (:3000) y Vite (:5173)
 ```
 
-## 🎨 Características de Diseño
+Abre http://localhost:5173.
 
-### Header
-- Navegación superior con enlaces a Gmail e Imágenes
-- Menú de aplicaciones de Google
-- Avatar de usuario (inicial)
+Para producción:
 
-### Sección Principal
-- Logo de Google centrado (texto con los colores de la marca)
-- Barra de búsqueda con iconos de lupa y micrófono
-- Botones "Buscar con Google" y "Me siento con suerte"
-- Efectos hover suaves
+```bash
+npm run build && npm run index
+npm start          # http://localhost:3000 (API + frontend)
+```
 
-### Footer
-- Enlaces informativos divididos en dos secciones
-- Siempre en la parte inferior sin tapar el contenido (layout flex de altura completa)
-- Estilo consistente con el tema de Google
+Con Docker:
 
-## 🚀 Instalación y Uso
+```bash
+docker build -t docseek .
+docker run -p 3000:3000 docseek
+```
 
-1. **Clona el repositorio:**
-   ```bash
-   git clone https://github.com/devcast42/00001-google-homepage-clone.git
-   ```
+Para volver a rastrear la documentación (unos 35 s, con medio segundo entre peticiones):
 
-2. **Navega al directorio:**
-   ```bash
-   cd 00001-google-homepage-clone
-   ```
+```bash
+npm run crawl && npm run index
+```
 
-3. **Abre el archivo en tu navegador:**
-   ```bash
-   open index.html
-   ```
-   O simplemente arrastra el archivo `index.html` a tu navegador favorito.
+### Configuración
 
-## 📱 Responsividad
+| Variable                | Por defecto       |                                                                         |
+| ----------------------- | ----------------- | ----------------------------------------------------------------------- |
+| `PORT`                  | `3000`            |                                                                         |
+| `HOST`                  | `0.0.0.0`         |                                                                         |
+| `INDEX_PATH`            | `data/index.json` |                                                                         |
+| `WEB_ROOT`              | `apps/web/dist`   | Si no existe, solo se sirve la API                                      |
+| `RATE_LIMIT_PER_MINUTE` | `300`             | Por IP                                                                  |
+| `CACHE_ENTRIES`         | `1000`            | Caché LRU de búsquedas (TTL 5 min)                                      |
+| `TRUST_PROXY`           | `false`           | Ponlo a `true` detrás de un proxy para que el rate limit vea la IP real |
+| `LOG_LEVEL`             | `info`            | Logs JSON (pino) con id de petición                                     |
 
-El diseño está optimizado para:
-- 💻 **Desktop** - Experiencia completa
-- 📱 **Mobile** - Adaptación fluida
-- 📟 **Tablet** - Diseño intermedio
+Los valores inválidos detienen el arranque con un mensaje claro.
 
-## 🎯 Objetivos del Proyecto
+## API
 
-- Practicar **HTML semántico**
-- Dominar **CSS Flexbox**
-- Implementar **efectos hover** y transiciones
-- Crear un **diseño pixel-perfect**
-- Desarrollar habilidades de **responsive design**
+```http
+GET /api/search?q=readFile&page=1&pageSize=10&source=nodejs
+```
 
-## 🔧 Posibles Mejoras
+```jsonc
+{
+  "query": "readFile",
+  "page": 1,
+  "pageSize": 10,
+  "total": 1101,
+  "totalPages": 111,
+  "tookMs": 2.4,
+  // "didYouMean": "readFile"  ← solo si se corrigió alguna palabra (p. ej. q=readFiel)
+  "results": [
+    {
+      "url": "https://nodejs.org/api/fs.html#fsreadfilepath-options-callback",
+      "breadcrumbs": ["File system", "Callback API"],
+      "title": { "text": "fs.readFile(path[, options], callback)", "highlights": [[3, 11]] },
+      "snippet": { "text": "…Asynchronously reads the entire contents…", "highlights": [[16, 21]] },
+    },
+  ],
+}
+```
 
-- [x] Añadir funcionalidad de búsqueda real
-- [ ] Implementar modo oscuro
-- [ ] Agregar animaciones más avanzadas
-- [ ] Añadir más páginas (resultados de búsqueda)
+| Ruta                      |                                                                     |
+| ------------------------- | ------------------------------------------------------------------- |
+| `GET /api/search`         | `q` (1–200 caracteres), `page` (1–100), `pageSize` (1–50), `source` |
+| `GET /api/suggest`        | `q`, `limit` (1–20). Sugerencias para autocompletar                 |
+| `GET /api/stats`          | Documentos, términos, fuentes y fecha del índice                    |
+| `GET /healthz`, `/readyz` | Liveness y readiness (sin rate limit)                               |
 
-## 📄 Licencia
+Los errores siempre tienen la forma `{ "error": { "code": "invalid_request" | "rate_limited" | "not_found" | "internal", "message": "…" } }`. Los resaltados se devuelven como rangos y no como HTML, así que el contenido indexado nunca puede inyectar marcado.
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+## Calidad
 
-## 🤝 Contribuciones
+Las pruebas e2e necesitan el navegador de Playwright. La primera vez, descárgalo con `npx playwright install chromium`.
 
-Las contribuciones son bienvenidas. Por favor:
+```bash
+npm run lint             # ESLint (incluidas las reglas de hooks de React) + Prettier
+npm run typecheck        # TypeScript estricto en código, pruebas y benchmarks
+npm run test:coverage    # Vitest con umbrales de cobertura
+npm run test:e2e         # Playwright + axe (compila y genera el índice antes)
+npm run bench:relevance  # Success@1/3 y MRR; -- --set holdout para validación
+npm run bench:latency    # p50/p95/p99 de búsqueda y autocompletado
+npm run bench:tune       # ajuste de parámetros del ranking
+```
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+[CI](.github/workflows/ci.yml) ejecuta todo lo anterior en cada pull request. Falla si la calidad del ranking baja del umbral, y además construye y prueba la imagen Docker.
 
-## 👨‍💻 Autor
+## Limitaciones y siguientes pasos
 
-**Charles Castillo**
-- GitHub: [@FROSTYLAN](https://github.com/FROSTYLAN)
-- LinkedIn: [Charles Castillo](https://linkedin.com/in/charles-castillo-772968234)
+- **Búsqueda léxica**: no resuelve sinónimos ni paráfrasis ("command line arguments" no encuentra `process.argv`). El siguiente paso natural es una búsqueda híbrida con embeddings para volver a ordenar los primeros resultados.
+- **Una sola fuente**. La arquitectura admite más (ver [ADR 0003](docs/adr/0003-rastreador.md)); MDN sería la siguiente.
+- **Índice en memoria de un proceso**: va sobrado para decenas de miles de secciones; para millones haría falta fragmentarlo.
+- **Juicios de relevancia escritos a mano** (76 consultas): con consultas reales registradas (de forma anónima) la evaluación sería más representativa.
+- **Reindexado completo**: no hay actualización incremental.
 
----
+## Historia
 
-⭐ ¡No olvides dar una estrella al proyecto si te gustó!
+El repositorio empezó como un clon en HTML/CSS de la portada de Google, mi primer ejercicio de maquetación. Está en el historial (`git log --reverse`) y se transformó en este proyecto.
+
+## Licencia
+
+Código bajo [MIT](LICENSE). El contenido indexado pertenece al proyecto Node.js y se distribuye bajo su propia licencia (MIT); los resultados enlazan siempre a la fuente original.

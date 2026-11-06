@@ -1,0 +1,17 @@
+{
+  "name": "@docseek/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "API HTTP de búsqueda (Fastify) que sirve también el frontend compilado.",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --conditions=source src/server.ts",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "@docseek/engine": "*",
+    "@fastify/rate-limit": "^11.2.1",
+    "@fastify/static": "^10.1.8",
+    "fastify": "^5.12.7"
+  }
+}

@@ -1,0 +1,63 @@
+[
+  {
+    "query": "append to file",
+    "relevant": ["fs.appendFile(", "fsPromises.appendFile(", "fs.appendFileSync("]
+  },
+  {
+    "query": "delete file",
+    "relevant": [
+      "fs.unlink(",
+      "fsPromises.unlink(",
+      "fs.rm(",
+      "fsPromises.rm(",
+      "fs.unlinkSync(",
+      "fs.rmSync("
+    ]
+  },
+  { "query": "rename file", "relevant": ["fs.rename(", "fsPromises.rename(", "fs.renameSync("] },
+  {
+    "query": "copy file",
+    "relevant": [
+      "fs.copyFile(",
+      "fsPromises.copyFile(",
+      "fs.copyFileSync(",
+      "fs.cp(",
+      "fsPromises.cp("
+    ]
+  },
+  {
+    "query": "file stats size",
+    "relevant": ["fs.stat(", "fsPromises.stat(", "Class: fs.Stats", "stats.size"]
+  },
+  { "query": "https get request", "relevant": ["https.get(", "https.request("] },
+  { "query": "once event", "relevant": ["emitter.once(", "events.once("] },
+  { "query": "emit event", "relevant": ["emitter.emit("] },
+  { "query": "file extension", "relevant": ["path.extname("] },
+  { "query": "base name of path", "relevant": ["path.basename("] },
+  { "query": "hmac signature", "relevant": ["crypto.createHmac("] },
+  { "query": "random bytes", "relevant": ["crypto.randomBytes("] },
+  { "query": "set interval", "relevant": ["setInterval(", "timersPromises.setInterval("] },
+  { "query": "format string", "relevant": ["util.format("] },
+  { "query": "inspect object", "relevant": ["util.inspect("] },
+  { "query": "operating system platform", "relevant": ["os.platform(", "process.platform"] },
+  { "query": "cpu count", "relevant": ["os.cpus(", "os.availableParallelism("] },
+  { "query": "memory usage", "relevant": ["process.memoryUsage("] },
+  {
+    "query": "high resolution time",
+    "relevant": ["process.hrtime(", "process.hrtime.bigint(", "performance.now("]
+  },
+  { "query": "udp socket", "relevant": ["dgram.createSocket("] },
+  {
+    "query": "decompress gzip",
+    "relevant": ["zlib.createGunzip(", "zlib.gunzip(", "zlib.gunzipSync("]
+  },
+  { "query": "text encoder", "relevant": ["Class: util.TextEncoder"] },
+  { "query": "assert throws", "relevant": ["assert.throws(", "assert.rejects("] },
+  { "query": "test before each hook", "relevant": ["beforeEach("] },
+  { "query": "createWriteStream", "relevant": ["fs.createWriteStream("] },
+  { "query": "writeFileSync", "relevant": ["fs.writeFileSync("] },
+  { "query": "execFile", "relevant": ["child_process.execFile("] },
+  { "query": "unlnk file", "relevant": ["fs.unlink(", "fsPromises.unlink(", "fs.unlinkSync("] },
+  { "query": "readable stream from iterable", "relevant": ["stream.Readable.from("] },
+  { "query": "message channel", "relevant": ["Class: MessageChannel"] }
+]

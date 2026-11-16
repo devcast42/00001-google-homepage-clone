@@ -8,16 +8,16 @@ Ideas que se discutieron para que este repo pase de "un buscador" a algo relevan
 
 ## Elegida: DocSeek Lens
 
-Pegar código (o arrastrar un archivo) en el buscador y obtener:
+**Una herramienta de estudio.** Se pega un fragmento de código que se quiere entender y se obtiene:
 
-- Cada uso de una API marcado en su línea, con una tarjeta: qué es, su firma y el enlace a la sección exacta de la documentación.
-- Lo **obsoleto** en ámbar y lo **eliminado** en rojo, con la alternativa oficial.
-- Un resumen de **conceptos** que usa el código (streams, promesas, eventos…).
+- **Las funciones subrayadas** en su línea, cada una con una tarjeta: qué es, su firma y el enlace a la sección exacta de la documentación.
+- **Otras referencias** de lo que hace el código: los **conceptos** (streams, promesas, eventos…) y las **cosas del propio lenguaje** (`async/await`, desestructuración…), también enlazadas.
+- **Explicaciones en palabras entendibles**, por capas: una frase corta primero y, si se quiere, más detalle.
 - Lo que no se puede identificar con seguridad se lista aparte, sin adivinar.
 
-**Versión 1:** sin IA, todo verificable. **Versión 2:** explicaciones en palabras sencillas generadas con IA, siempre citando las secciones encontradas en la versión 1.
+Avisar de lo **obsoleto o eliminado** se mantiene como ayuda secundaria: enseña que una función ya no se usa y cuál la sustituye, pero no es el objetivo. Lens no es una herramienta para revisar ni corregir código.
 
-Con el enfoque de usuario actual ([01 — El problema y el usuario](01-problema-y-usuario.md)), las explicaciones sencillas, los conceptos y las cosas del propio lenguaje pasan a ser lo principal, y la detección de lo obsoleto queda como apoyo.
+**Versión 1:** subrayado y enlaces, sin IA, todo verificable. **Versión 2:** explicaciones en palabras sencillas generadas con IA, siempre citando las secciones encontradas en la versión 1. Como el objetivo es estudiar, la versión 2 es parte central del producto, no un añadido.
 
 ### Fases previstas
 

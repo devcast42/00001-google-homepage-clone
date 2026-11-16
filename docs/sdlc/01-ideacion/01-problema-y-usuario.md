@@ -2,7 +2,7 @@
 
 > **La pregunta:** ¿qué dolor específico resolvemos, y para quién?
 
-- **Estado:** 🟡 Hipótesis (versión 3). Enfoque y necesidades definidos; falta validarlo con usuarios reales.
+- **Estado:** 🟡 Hipótesis (versión 4). Enfoque, necesidades y uso definidos; falta validarlo con usuarios reales.
 - **Producto:** DocSeek Lens.
 
 ---
@@ -43,6 +43,14 @@ Ya no escriben el código: lo **piden en lenguaje natural** y lo reciben hecho.
 > **el problema es** que reciben código que funciona pero que no entienden: no saben por qué es así ni de dónde sale cada parte,
 > **lo que hoy resuelven** pidiéndole a la misma IA que se lo explique, sin poder comprobar la respuesta, o aceptándolo sin entenderlo,
 > **y les cuesta** no poder revisar ni arreglar su propio código, y no aprender los fundamentos.
+
+### Para qué lo usa: para estudiar
+
+DocSeek Lens es **una herramienta de estudio**, no de revisión de código ni de detección de errores. La persona pega un fragmento de código que quiere entender y obtiene:
+
+1. **Las funciones subrayadas**, cada una enlazada a su sección de la documentación oficial.
+2. **Otras referencias** de lo que hace el código: conceptos y cosas del lenguaje que aparecen en él.
+3. **Explicaciones en palabras entendibles** de qué hace cada parte y por qué.
 
 ### Qué hace DocSeek Lens por ellos
 

@@ -14,16 +14,16 @@ Contexto para Claude Code en este repositorio. Léelo entero antes de empezar.
 
 Es el **lab 001** de una serie de minilabs numerados que se están reinventando. Empezó como un clon en HTML/CSS de la portada de Google y hoy es **DocSeek**: un buscador de la documentación de la API de Node.js con motor propio, escrito en TypeScript.
 
-El siguiente paso es **DocSeek Lens**: pegar código y entender qué usa y por qué, con la documentación oficial como fuente.
+El siguiente paso es **DocSeek Lens**, una **herramienta de estudio**: se pega un fragmento de código y se subrayan sus funciones enlazadas a la documentación oficial, junto con otras referencias de lo que hace (conceptos, cosas del lenguaje) y explicaciones en palabras entendibles. No es una herramienta de revisión ni de detección de errores.
 
 ## Estado actual (actualiza esta sección al terminar cada bloque de trabajo)
 
 - **Rama:** `claude/stoic-ptolemy-gyanyx`, con el **pull request #2 abierto** contra `main` (DocSeek completo + documentación del SDLC). CI en verde.
 - **Fase del SDLC:** 1, ideación. Ver [`docs/sdlc/01-ideacion`](docs/sdlc/01-ideacion).
-  - [01 — El problema y el usuario](docs/sdlc/01-ideacion/01-problema-y-usuario.md): versión 3, sin validar con usuarios reales.
+  - [01 — El problema y el usuario](docs/sdlc/01-ideacion/01-problema-y-usuario.md): versión 4, sin validar con usuarios reales.
   - [02 — Propuestas de producto](docs/sdlc/01-ideacion/02-propuestas-de-producto.md): elegida DocSeek Lens.
   - [03 — Viabilidad de Lens](docs/sdlc/01-ideacion/03-viabilidad-lens.md): fase 0 hecha; es viable.
-- **Usuario objetivo:** programadores sin fundamentos sólidos que construyen con agentes de IA y **quieren aprender sin perder velocidad**. Necesitan explicaciones sencillas **y** enlaces a la documentación oficial, sobre funciones, conceptos y cosas del propio lenguaje. Lo usan en una web (fuera del editor). Node.js primero; más tecnologías después, añadiendo su documentación como fuente.
+- **Usuario objetivo:** programadores sin fundamentos sólidos que construyen con agentes de IA y **quieren aprender sin perder velocidad**. Necesitan explicaciones sencillas **y** enlaces a la documentación oficial, sobre funciones, conceptos y cosas del propio lenguaje. Lo usan **para estudiar**, en una web (fuera del editor). Node.js primero; más tecnologías después, añadiendo su documentación como fuente.
 - **Siguiente decisión pendiente:** (a) entrevistar a 3–5 personas antes de pasar a requisitos, o (b) pasar ya a la fase 2 (requisitos) y validar en paralelo.
 - **También pendiente para Lens:** política de privacidad del código pegado (propuesta: no guardarlo ni registrarlo) y si la entrada es el mismo cuadro de búsqueda (recomendado) o una pestaña aparte.
 

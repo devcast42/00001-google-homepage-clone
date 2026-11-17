@@ -2,7 +2,7 @@
 
 Cómo se construye DocSeek Lens. Las decisiones técnicas ya tomadas para el buscador están en [`docs/adr`](../adr).
 
-**Estado:** 🟡 Borrador. Faltan las decisiones del final.
+**Estado:** ✅ Completa.
 
 ## Cómo funciona, de principio a fin
 
@@ -37,7 +37,9 @@ Código pegado
 - **Modelo propuesto:** Claude Opus 5.5, el modelo actual recomendado por Anthropic.
 - **Citas:** la API de Claude tiene una función de **citas**. Se le pasan las secciones de la documentación y cada frase de la respuesta indica de qué sección sale. Así se cumple "toda explicación cita su fuente" sin inventar nada nuevo.
 - **Si la IA se niega a responder** (a veces pasa por sus filtros de seguridad), la petición se repite automáticamente con otro modelo.
-- **Coste aproximado** (estimado, no medido): unos **4 céntimos de dólar por análisis** con Opus 5.5. Un modelo más pequeño, Claude Haiku 5.5, costaría unas 40 veces menos, pero puede explicar peor. Se medirá con ejemplos reales antes de decidir.
+- **Coste aproximado** (estimado, no medido): unos **4 céntimos de dólar por análisis** con Opus 5.5. Claude Haiku 5.5 costaría unas 40 veces menos, pero puede explicar peor.
+- **Plan:** empezar con Opus 5.5 y **medir** con ejemplos reales si Haiku 5.5 explica lo bastante bien para ahorrar.
+- **La clave de la API** se guarda en una variable de entorno del servidor (`ANTHROPIC_API_KEY`), **nunca** en el repositorio.
 
 ## Compartir sin guardar
 
@@ -54,9 +56,23 @@ Cada paso deja algo que funciona y se puede probar:
 5. Añadir React.
 6. Copiar, exportar y compartir.
 
-## Decisiones pendientes
+## Privacidad
 
-1. **¿Qué modelo de IA?** Opus 5.5 (mejor, unos 4 céntimos por análisis) o Haiku 5.5 (mucho más barato). Propuesta: empezar con Opus 5.5 y medir.
-2. **¿Quién paga la IA?** Hace falta una cuenta y una clave de la API de Anthropic.
-3. **Aviso de privacidad:** nuestro servidor no guarda el código, pero para explicarlo **se envía a la IA**, que es un servicio externo. Hay que decirlo claramente junto al cuadro de texto.
-4. **Licencias de las fuentes:** comprobar las normas de rastreo y la licencia de MDN, Express y React antes de descargarlas. MDN, por ejemplo, obliga a citar su autoría.
+Nuestro servidor no guarda el código. Pero para explicarlo **se envía a la IA de Anthropic**, que es un servicio externo. Se dice claramente junto al cuadro de texto.
+
+## Fuentes y licencias
+
+Las documentaciones se descargan de sus **repositorios oficiales en GitHub**, donde están en Markdown: es más limpio y respetuoso que rastrear sus webs. Las tres permiten reutilizar su contenido **citando la autoría**:
+
+| Fuente  | Dónde                                | Licencia                                                          | Qué nos obliga a hacer                                                                            |
+| ------- | ------------------------------------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Node.js | nodejs.org/api                       | MIT                                                               | Citar la fuente (ya se hace)                                                                      |
+| MDN     | `github.com/mdn/content`             | Texto: **CC BY-SA 2.5**. Código de ejemplo: CC0 (dominio público) | Citar a MDN y sus colaboradores, y publicar lo que copiemos de su texto con la **misma licencia** |
+| Express | `github.com/expressjs/expressjs.com` | **CC BY 4.0**                                                     | Citar a los colaboradores de Express                                                              |
+| React   | `github.com/reactjs/react.dev`       | **CC BY 4.0**                                                     | Citar a la documentación de React                                                                 |
+
+**Consecuencias para el producto:**
+
+- Cada tarjeta y cada cita muestran su fuente y su licencia (por ejemplo, "Fuente: MDN · CC BY-SA 2.5"), con el enlace.
+- El corpus guardado en el repositorio incluye un archivo con las licencias de cada fuente.
+- Esto es una lectura de las licencias, **no un consejo legal**. Desde este entorno no se pudieron consultar las webs, solo los repositorios de GitHub.

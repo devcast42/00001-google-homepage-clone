@@ -19,11 +19,12 @@ El siguiente paso es **DocSeek Lens**, una **herramienta de estudio**: se pega u
 ## Estado actual (actualiza esta sección al terminar cada bloque de trabajo)
 
 - **Rama:** `claude/stoic-ptolemy-gyanyx`, con el **pull request #2 abierto** contra `main` (DocSeek completo + documentación del SDLC). CI en verde.
-- **Fase del SDLC:** 3, [diseño](docs/sdlc/03-diseno.md). Hay **un archivo por fase** en [`docs/sdlc`](docs/sdlc), corto y resumido. Completas:
+- **Fase del SDLC:** 4, [desarrollo](docs/sdlc/04-desarrollo.md). Hay **un archivo por fase** en [`docs/sdlc`](docs/sdlc), corto y resumido. Completas:
   - [Fase 1 — Ideación](docs/sdlc/01-ideacion.md): el problema y el usuario, la solución (DocSeek Lens) y la viabilidad (comprobada con un prototipo; los detalles técnicos están en el historial de git y en `spikes/lens-fase0`).
   - [Fase 2 — Requisitos](docs/sdlc/02-requisitos.md): qué debe hacer Lens y las decisiones tomadas.
+  - [Fase 3 — Diseño](docs/sdlc/03-diseno.md): subrayado sin IA + explicaciones con Claude Opus 5.5 usando citas; medir si Haiku 5.5 basta para ahorrar. Fuentes desde sus repos de GitHub, citando autoría y licencia.
 - **Usuario objetivo:** programadores sin fundamentos sólidos que construyen con agentes de IA y **quieren aprender sin perder velocidad**. Necesitan explicaciones sencillas **y** enlaces a la documentación oficial, sobre funciones, conceptos y cosas del propio lenguaje. Lo usan **para estudiar**, en una web (fuera del editor). Fuentes de la primera versión: Node.js, JavaScript (MDN), Express y React; Next.js, Nest y otras, después.
-- **Siguiente paso:** cerrar el [borrador de diseño](docs/sdlc/03-diseno.md) con las decisiones pendientes que lista al final (modelo de IA, quién paga la IA, aviso de privacidad, licencias de las fuentes).
+- **Siguiente paso:** empezar a construir, por el paso 1 del orden de construcción del diseño (subrayado de Node con su interfaz). La clave de la API de Anthropic va en `ANTHROPIC_API_KEY`, nunca en el repositorio.
 
 ## Estructura
 

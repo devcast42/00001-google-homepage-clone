@@ -20,11 +20,11 @@ El siguiente paso es **DocSeek Lens**, una **herramienta de estudio**: se pega u
 
 - **Rama:** `claude/stoic-ptolemy-gyanyx`, con el **pull request #2 abierto** contra `main` (DocSeek completo + documentación del SDLC). CI en verde.
 - **Fase del SDLC:** 1, ideación. Ver [`docs/sdlc/01-ideacion`](docs/sdlc/01-ideacion).
-  - [01 — El problema y el usuario](docs/sdlc/01-ideacion/01-problema-y-usuario.md): versión 4, sin validar con usuarios reales.
+  - [01 — El problema y el usuario](docs/sdlc/01-ideacion/01-problema-y-usuario.md): el problema y el usuario objetivo.
   - [02 — Propuestas de producto](docs/sdlc/01-ideacion/02-propuestas-de-producto.md): elegida DocSeek Lens.
   - [03 — Viabilidad de Lens](docs/sdlc/01-ideacion/03-viabilidad-lens.md): fase 0 hecha; es viable.
 - **Usuario objetivo:** programadores sin fundamentos sólidos que construyen con agentes de IA y **quieren aprender sin perder velocidad**. Necesitan explicaciones sencillas **y** enlaces a la documentación oficial, sobre funciones, conceptos y cosas del propio lenguaje. Lo usan **para estudiar**, en una web (fuera del editor). Node.js primero; más tecnologías después, añadiendo su documentación como fuente.
-- **Siguiente decisión pendiente:** (a) entrevistar a 3–5 personas antes de pasar a requisitos, o (b) pasar ya a la fase 2 (requisitos) y validar en paralelo.
+- **Siguiente paso:** fase 2, requisitos de DocSeek Lens. No se harán entrevistas a usuarios.
 - **También pendiente para Lens:** política de privacidad del código pegado (propuesta: no guardarlo ni registrarlo) y si la entrada es el mismo cuadro de búsqueda (recomendado) o una pestaña aparte.
 
 ## Estructura
@@ -64,4 +64,4 @@ Antes de dar algo por terminado: `npm run lint && npm run typecheck && npm run t
 - TypeScript estricto, ESM, Prettier (`printWidth` 100, comillas simples).
 - Las métricas se miden, no se suponen: cada cambio de ranking o de detección va con sus números.
 - Los conjuntos de evaluación se fijan **antes** de ajustar; si se usan para corregir algo, se dice que dejaron de estar limpios.
-- Lo que se sabe de los usuarios va en `docs/sdlc/01-ideacion/01-problema-y-usuario.md`, con sus palabras exactas.
+- `docs/sdlc/01-ideacion/01-problema-y-usuario.md` solo contiene el problema y el usuario objetivo: nada de soluciones ni entrevistas.

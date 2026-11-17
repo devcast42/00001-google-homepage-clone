@@ -22,8 +22,8 @@ El siguiente paso es **DocSeek Lens**, una **herramienta de estudio**: se pega u
 - **Fase del SDLC:** 3, [diseño](docs/sdlc/03-diseno.md). Hay **un archivo por fase** en [`docs/sdlc`](docs/sdlc), corto y resumido. Completas:
   - [Fase 1 — Ideación](docs/sdlc/01-ideacion.md): el problema y el usuario, la solución (DocSeek Lens) y la viabilidad (comprobada con un prototipo; los detalles técnicos están en el historial de git y en `spikes/lens-fase0`).
   - [Fase 2 — Requisitos](docs/sdlc/02-requisitos.md): qué debe hacer Lens y las decisiones tomadas.
-- **Usuario objetivo:** programadores sin fundamentos sólidos que construyen con agentes de IA y **quieren aprender sin perder velocidad**. Necesitan explicaciones sencillas **y** enlaces a la documentación oficial, sobre funciones, conceptos y cosas del propio lenguaje. Lo usan **para estudiar**, en una web (fuera del editor). Fuentes de la primera versión: Node.js, JavaScript (MDN), Express, React y Next.js; Nest y otras, después.
-- **Siguiente paso:** fase 3, diseño de Lens. Incluye planificar cómo añadir las fuentes nuevas de la primera versión: JavaScript (MDN), Express, React y Next.js, además de Node.
+- **Usuario objetivo:** programadores sin fundamentos sólidos que construyen con agentes de IA y **quieren aprender sin perder velocidad**. Necesitan explicaciones sencillas **y** enlaces a la documentación oficial, sobre funciones, conceptos y cosas del propio lenguaje. Lo usan **para estudiar**, en una web (fuera del editor). Fuentes de la primera versión: Node.js, JavaScript (MDN), Express y React; Next.js, Nest y otras, después.
+- **Siguiente paso:** fase 3, diseño de Lens. Incluye planificar cómo añadir las fuentes nuevas de la primera versión: JavaScript (MDN), Express y React, además de Node.
 
 ## Estructura
 

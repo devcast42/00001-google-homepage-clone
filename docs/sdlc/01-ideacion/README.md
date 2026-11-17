@@ -5,5 +5,5 @@ Antes de construir nada, entender **qué dolor resolvemos y para quién**. Si es
 | Documento                                                         | Estado                           |
 | ----------------------------------------------------------------- | -------------------------------- |
 | [01 — El problema y el usuario](01-problema-y-usuario.md)         | ✅ Definido                      |
-| [02 — Propuestas de producto](02-propuestas-de-producto.md)       | ✅ Elegida: DocSeek Lens         |
+| [02 — La solución: DocSeek Lens](02-propuestas-de-producto.md)    | ✅ Definido                      |
 | [03 — Viabilidad técnica de Lens (fase 0)](03-viabilidad-lens.md) | ✅ Viable, con límites conocidos |

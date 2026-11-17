@@ -1,41 +1,11 @@
-# 02 — Propuestas de producto para el lab 001
+# 02 — La solución: DocSeek Lens
 
-Ideas que se discutieron para que este repo pase de "un buscador" a algo relevante en la era de los agentes de IA. **Elegida: DocSeek Lens.**
+Una **herramienta de estudio**. Pegas un fragmento de código que quieres entender y obtienes:
 
-## La historia del repo
+1. **Las funciones subrayadas**, cada una enlazada a su sección de la documentación oficial.
+2. **Otras referencias** de lo que hace el código: conceptos (streams, promesas…) y cosas del lenguaje (`async/await`…).
+3. **Explicaciones en palabras entendibles**: primero una frase corta y, si quieres, más detalle.
 
-> **Lab 001: del clon de Google a buscar por código.** 2010: la portada de Google en HTML. → Un buscador real con motor propio. → **DocSeek Lens:** pegas código y te explica qué usa y por qué, con la documentación oficial como fuente (como Google Lens, pero para código).
+Todo lo que explica cita la documentación oficial, para que se pueda comprobar.
 
-## Elegida: DocSeek Lens
-
-**Una herramienta de estudio.** Se pega un fragmento de código que se quiere entender y se obtiene:
-
-- **Las funciones subrayadas** en su línea, cada una con una tarjeta: qué es, su firma y el enlace a la sección exacta de la documentación.
-- **Otras referencias** de lo que hace el código: los **conceptos** (streams, promesas, eventos…) y las **cosas del propio lenguaje** (`async/await`, desestructuración…), también enlazadas.
-- **Explicaciones en palabras entendibles**, por capas: una frase corta primero y, si se quiere, más detalle.
-- Lo que no se puede identificar con seguridad se lista aparte, sin adivinar.
-
-Avisar de lo **obsoleto o eliminado** se mantiene como ayuda secundaria: enseña que una función ya no se usa y cuál la sustituye, pero no es el objetivo. Lens no es una herramienta para revisar ni corregir código.
-
-**Versión 1:** subrayado y enlaces, sin IA, todo verificable. **Versión 2:** explicaciones en palabras sencillas generadas con IA, siempre citando las secciones encontradas en la versión 1. Como el objetivo es estudiar, la versión 2 es parte central del producto, no un añadido.
-
-### Fases previstas
-
-0. **Prototipo de viabilidad.** ✅ Hecho: ver [03 — Viabilidad técnica](03-viabilidad-lens.md).
-1. Catálogo de APIs en el indexador.
-2. Analizador como paquete propio (`packages/lens`), con archivos anotados y benchmark de precisión.
-3. Ruta `POST /api/analyze` e interfaz.
-4. Pruebas e2e y de accesibilidad, README, ADR y GIF de demo.
-
-### Decisiones pendientes
-
-1. **Privacidad:** propuesta de no guardar ni registrar nunca el código pegado (solo su tamaño y el tiempo de análisis), y decirlo junto al cuadro de texto.
-2. **Entrada:** un solo cuadro que detecta el código (recomendado) o una pestaña aparte "Analizar código".
-
-## Otras ideas (para después)
-
-| Idea                                       | Qué es                                                                                                                                                                                                                                                                                 |
-| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **B. DocSeek para agentes (servidor MCP)** | Herramientas `search_docs`, `read_section` y `check_api` para que Claude Code, Cursor, etc. consulten la documentación real. Experimento: mismo agente con y sin DocSeek en ~30 tareas, midiendo APIs obsoletas o inventadas y si el código funciona. Reutiliza el analizador de Lens. |
-| **A. Preguntar a la documentación**        | Respuestas generadas con IA donde cada frase cita su sección, midiendo cuántas afirmaciones no tienen fuente.                                                                                                                                                                          |
-| **C. Documentación con memoria**           | Rastrear varias versiones de Node y responder "¿qué cambió en `fs` desde Node 20?".                                                                                                                                                                                                    |
+Es una web, dentro del buscador DocSeek. Empieza con Node.js; otras tecnologías se añaden incorporando su documentación.

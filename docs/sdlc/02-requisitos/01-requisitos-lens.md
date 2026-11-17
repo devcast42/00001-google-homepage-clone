@@ -4,11 +4,13 @@
 
 ## Qué debe hacer
 
-1. **Recibir código**: pegarlo en el buscador o arrastrar un archivo `.js` o `.ts`.
+1. **Recibir código** de dos formas:
+   - **Pegándolo en el buscador**: DocSeek se da cuenta solo de que es código.
+   - **Con un botón al lado del buscador**, como el de Google Lens en Google, que abre el modo para pegar código o arrastrar un archivo `.js` o `.ts`.
 2. **Subrayar las funciones** de Node.js en su línea.
 3. **Mostrar una tarjeta** al pasar el ratón o tocar una función: qué es, en una frase sencilla, y el enlace a su sección de la documentación.
 4. **Listar los conceptos** y las cosas del lenguaje que aparecen (streams, promesas, `async/await`…), cada uno con su enlace.
-5. **Explicar el código en palabras entendibles**: una frase corta por cada parte y un "ver más" con el detalle.
+5. **Explicar el código en palabras entendibles, en español**: una frase corta por cada parte y un "ver más" con el detalle. Los enlaces llevan a la documentación oficial, que está en inglés.
 6. **Decir lo que no reconoce**, sin inventar.
 7. **Avisar si algo está obsoleto** y qué se usa en su lugar (secundario).
 
@@ -27,8 +29,15 @@
 - Extensión para el editor.
 - Cuentas de usuario o historial.
 
+## Decisiones tomadas
+
+| Pregunta                              | Decisión                                                                       |
+| ------------------------------------- | ------------------------------------------------------------------------------ |
+| ¿Dónde se pega el código?             | En el buscador (se detecta solo) **y** con un botón al lado, como Google Lens. |
+| ¿En qué idioma son las explicaciones? | **Español.** Los enlaces van a la documentación oficial en inglés.             |
+
 ## Decisiones pendientes
 
-1. **¿Dónde se pega el código?** En el mismo cuadro del buscador (DocSeek se da cuenta solo) o en una pestaña aparte.
-2. **¿En qué idioma son las explicaciones?** La documentación de Node está en inglés.
-3. **¿Las explicaciones sencillas van en la primera versión?** Necesitan IA, y eso tiene un coste por uso.
+1. **¿Las explicaciones sencillas van en la primera versión?** Necesitan IA, y eso tiene un coste por uso.
+2. **¿Se confirma que el código pegado no se guarda?**
+3. **Las cosas del lenguaje (`async/await`…) están en la documentación de JavaScript (MDN), no en la de Node.** ¿Se añade MDN en la primera versión, o al principio solo se enlazan las funciones de Node?

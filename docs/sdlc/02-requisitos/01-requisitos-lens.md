@@ -1,6 +1,6 @@
 # 01 — Requisitos de DocSeek Lens
 
-**Estado:** 🟡 Borrador. Faltan las decisiones del final.
+**Estado:** ✅ Completo.
 
 ## Qué debe hacer
 
@@ -13,13 +13,16 @@
 5. **Explicar el código en palabras entendibles, en español**: una frase corta por cada parte y un "ver más" con el detalle. Los enlaces llevan a la documentación oficial, que está en inglés.
 6. **Decir lo que no reconoce**, sin inventar.
 7. **Avisar si algo está obsoleto** y qué se usa en su lugar (secundario).
+8. **Copiar** el análisis (el código con sus explicaciones) para pegarlo en otro sitio.
+9. **Exportar** el análisis a un archivo, por ejemplo Markdown, para guardarlo en los apuntes.
+10. **Compartir** el análisis con un enlace. El enlace lleva el código dentro, así que quien lo abre ve lo mismo sin que el servidor lo guarde.
 
 ## Cómo debe ser
 
 - **Rápido**: el subrayado aparece en menos de 1 segundo. Las explicaciones pueden tardar más, pero se ven aparecer mientras se escriben.
 - **Comprobable**: toda explicación cita la sección de la documentación de la que sale (Node o MDN).
 - **Usable en móvil y con teclado.**
-- **Privado**: el código pegado no se guarda.
+- **Privado**: el servidor no guarda el código pegado, ni siquiera para compartirlo.
 
 ## Fuera de alcance (por ahora)
 
@@ -37,7 +40,4 @@
 | ¿En qué idioma son las explicaciones?                      | **Español.** Los enlaces van a la documentación oficial en inglés.                                   |
 | ¿Llevan IA las explicaciones en la primera versión?        | **Sí.**                                                                                              |
 | ¿Cómo se explican las cosas del lenguaje (`async/await`…)? | **Se añade la documentación de JavaScript (MDN)** como fuente, y la IA la cita igual que la de Node. |
-
-## Decisiones pendientes
-
-1. **¿Se confirma que el código pegado no se guarda?**
+| ¿Se guarda el código pegado?                               | **No.** Pero se puede copiar, exportar y compartir con un enlace que lleva el código dentro.         |

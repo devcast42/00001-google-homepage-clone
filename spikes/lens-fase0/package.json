@@ -1,0 +1,15 @@
+{
+  "name": "lens-fase0",
+  "private": true,
+  "description": "Prototipo desechable de la fase 0 de DocSeek Lens. No forma parte de los workspaces del monorepo.",
+  "type": "module",
+  "scripts": {
+    "eval": "node src/run.mjs ../../data/corpus/nodejs.jsonl.gz samples && node src/run.mjs ../../data/corpus/nodejs.jsonl.gz holdout",
+    "bench": "node src/bench-size.mjs ../../data/corpus/nodejs.jsonl.gz",
+    "coverage": "node src/coverage.mjs ../../data/corpus/nodejs.jsonl.gz"
+  },
+  "dependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "5.9.3"
+  }
+}

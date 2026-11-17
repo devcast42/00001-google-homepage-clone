@@ -1,0 +1,45 @@
+/**
+ * Palabras vacías en inglés. La lista es corta a propósito: en documentación técnica
+ * palabras como "this", "new", "on" u "of" forman parte de nombres de API
+ * (`emitter.on()`, `Buffer.of()`), así que no se descartan cuando aparecen dentro
+ * de un identificador, solo cuando son palabras sueltas.
+ */
+export const STOPWORDS: ReadonlySet<string> = new Set([
+  'a',
+  'an',
+  'and',
+  'are',
+  'as',
+  'at',
+  'be',
+  'by',
+  'for',
+  'from',
+  'has',
+  'have',
+  'how',
+  'i',
+  'in',
+  'into',
+  'is',
+  'it',
+  'its',
+  'of',
+  'or',
+  'that',
+  'the',
+  'their',
+  'there',
+  'these',
+  'they',
+  'to',
+  'was',
+  'were',
+  'what',
+  'when',
+  'which',
+  'will',
+  'with',
+  'you',
+  'your',
+]);

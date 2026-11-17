@@ -1,0 +1,17 @@
+{
+  "source": "nodejs",
+  "documents": 5013,
+  "label": "Node.js API",
+  "startUrls": [
+    "https://nodejs.org/api/index.html"
+  ],
+  "crawledAt": "2026-11-02T01:08:25.795Z",
+  "userAgent": "DocSeekBot/0.1 (+https://github.com/devcast42/00001-google-homepage-clone)",
+  "stats": {
+    "pagesFetched": 68,
+    "pagesSkippedByRobots": 0,
+    "pagesDuplicated": 0,
+    "pagesFailed": 1,
+    "documents": 5013
+  }
+}

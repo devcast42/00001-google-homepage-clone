@@ -1,0 +1,10 @@
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+.git
+coverage
+test-results
+playwright-report
+data/index.json
+*.md
+!README.md

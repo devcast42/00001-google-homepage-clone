@@ -1,0 +1,17 @@
+{
+  "name": "@docseek/engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Motor de búsqueda full-text sin dependencias: índice invertido, ranking BM25F, tolerancia a errores y snippets.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ]
+}

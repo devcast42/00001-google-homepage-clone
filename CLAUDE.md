@@ -19,13 +19,12 @@ El siguiente paso es **DocSeek Lens**, una **herramienta de estudio**: se pega u
 ## Estado actual (actualiza esta sección al terminar cada bloque de trabajo)
 
 - **Rama:** `claude/stoic-ptolemy-gyanyx`, con el **pull request #2 abierto** contra `main` (DocSeek completo + documentación del SDLC). CI en verde.
-- **Fase del SDLC:** 1, ideación. Ver [`docs/sdlc/01-ideacion`](docs/sdlc/01-ideacion).
+- **Fase del SDLC:** 2, requisitos ([`docs/sdlc/02-requisitos`](docs/sdlc/02-requisitos)). La fase 1, ideación, está completa ([`docs/sdlc/01-ideacion`](docs/sdlc/01-ideacion)):
   - [01 — El problema y el usuario](docs/sdlc/01-ideacion/01-problema-y-usuario.md): el problema y el usuario objetivo.
   - [02 — La solución: DocSeek Lens](docs/sdlc/01-ideacion/02-propuestas-de-producto.md): qué es Lens.
   - [03 — ¿Se puede construir?](docs/sdlc/01-ideacion/03-viabilidad-lens.md): sí, comprobado con un prototipo. Los detalles técnicos están en el historial de git de ese archivo y en `spikes/lens-fase0`.
 - **Usuario objetivo:** programadores sin fundamentos sólidos que construyen con agentes de IA y **quieren aprender sin perder velocidad**. Necesitan explicaciones sencillas **y** enlaces a la documentación oficial, sobre funciones, conceptos y cosas del propio lenguaje. Lo usan **para estudiar**, en una web (fuera del editor). Node.js primero; más tecnologías después, añadiendo su documentación como fuente.
-- **Siguiente paso:** fase 2, requisitos de DocSeek Lens. No se harán entrevistas a usuarios.
-- **También pendiente para Lens:** política de privacidad del código pegado (propuesta: no guardarlo ni registrarlo) y si la entrada es el mismo cuadro de búsqueda (recomendado) o una pestaña aparte.
+- **Siguiente paso:** cerrar el borrador de [requisitos de Lens](docs/sdlc/02-requisitos/01-requisitos-lens.md) con las decisiones pendientes que lista al final.
 
 ## Estructura
 

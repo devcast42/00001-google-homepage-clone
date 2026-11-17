@@ -75,4 +75,6 @@ Las documentaciones se descargan de sus **repositorios oficiales en GitHub**, do
 
 - Cada tarjeta y cada cita muestran su fuente y su licencia (por ejemplo, "Fuente: MDN · CC BY-SA 2.5"), con el enlace.
 - El corpus guardado en el repositorio incluye un archivo con las licencias de cada fuente.
-- Esto es una lectura de las licencias, **no un consejo legal**. Desde este entorno no se pudieron consultar las webs, solo los repositorios de GitHub.
+- **Cómo citar MDN**, según su propia guía: el título de la página, el enlace a esa página concreta, "Mozilla Contributors", la licencia (CC BY-SA 2.5) y una nota si se ha modificado el texto. Por ejemplo: _"async function" por Mozilla Contributors, licencia CC BY-SA 2.5_.
+- **Normas de rastreo (`robots.txt`)** de las webs: Express y React lo permiten todo; MDN solo prohíbe sus rutas internas (`/api/`, `/media`, archivos), no la documentación. Aun así, se descarga de GitHub.
+- Licencias comprobadas en los repositorios oficiales y en las webs. Esto es una lectura de las licencias, **no un consejo legal**.

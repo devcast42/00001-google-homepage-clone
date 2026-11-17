@@ -1,6 +1,6 @@
 # Prototipo de la fase 0 de DocSeek Lens
 
-Código **desechable** para comprobar si se puede detectar qué APIs de Node usa un fragmento de código y enlazar cada una con su sección de la documentación. No forma parte del producto: la versión de verdad se escribirá con pruebas, en un paquete propio. Los resultados están en [`docs/sdlc/01-ideacion/03-viabilidad-lens.md`](../../docs/sdlc/01-ideacion/03-viabilidad-lens.md).
+Código **desechable** para comprobar si se puede detectar qué APIs de Node usa un fragmento de código y enlazar cada una con su sección de la documentación. No forma parte del producto: la versión de verdad se escribirá con pruebas, en un paquete propio. Los resultados están en [`docs/sdlc/01-ideacion.md`](../../docs/sdlc/01-ideacion.md) (sección "¿Se puede construir?").
 
 ```bash
 cd spikes/lens-fase0

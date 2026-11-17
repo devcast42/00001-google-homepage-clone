@@ -19,10 +19,9 @@ El siguiente paso es **DocSeek Lens**, una **herramienta de estudio**: se pega u
 ## Estado actual (actualiza esta sección al terminar cada bloque de trabajo)
 
 - **Rama:** `claude/stoic-ptolemy-gyanyx`, con el **pull request #2 abierto** contra `main` (DocSeek completo + documentación del SDLC). CI en verde.
-- **Fase del SDLC:** 3, diseño ([`docs/sdlc/03-diseno`](docs/sdlc/03-diseno)). Completas: fase 2, [requisitos de Lens](docs/sdlc/02-requisitos/01-requisitos-lens.md), y fase 1, ideación ([`docs/sdlc/01-ideacion`](docs/sdlc/01-ideacion)):
-  - [01 — El problema y el usuario](docs/sdlc/01-ideacion/01-problema-y-usuario.md): el problema y el usuario objetivo.
-  - [02 — La solución: DocSeek Lens](docs/sdlc/01-ideacion/02-propuestas-de-producto.md): qué es Lens.
-  - [03 — ¿Se puede construir?](docs/sdlc/01-ideacion/03-viabilidad-lens.md): sí, comprobado con un prototipo. Los detalles técnicos están en el historial de git de ese archivo y en `spikes/lens-fase0`.
+- **Fase del SDLC:** 3, [diseño](docs/sdlc/03-diseno.md). Hay **un archivo por fase** en [`docs/sdlc`](docs/sdlc), corto y resumido. Completas:
+  - [Fase 1 — Ideación](docs/sdlc/01-ideacion.md): el problema y el usuario, la solución (DocSeek Lens) y la viabilidad (comprobada con un prototipo; los detalles técnicos están en el historial de git y en `spikes/lens-fase0`).
+  - [Fase 2 — Requisitos](docs/sdlc/02-requisitos.md): qué debe hacer Lens y las decisiones tomadas.
 - **Usuario objetivo:** programadores sin fundamentos sólidos que construyen con agentes de IA y **quieren aprender sin perder velocidad**. Necesitan explicaciones sencillas **y** enlaces a la documentación oficial, sobre funciones, conceptos y cosas del propio lenguaje. Lo usan **para estudiar**, en una web (fuera del editor). Node.js primero; más tecnologías después, añadiendo su documentación como fuente.
 - **Siguiente paso:** fase 3, diseño de Lens. Incluye planificar cómo añadir la documentación de JavaScript (MDN) como fuente nueva.
 
@@ -38,7 +37,7 @@ El siguiente paso es **DocSeek Lens**, una **herramienta de estudio**: se pega u
 | `e2e`               | Playwright en escritorio y móvil, más auditoría de accesibilidad con axe                                                                     |
 | `data/corpus`       | Corpus versionado (5.013 secciones). `data/index.json` se genera y no se versiona                                                            |
 | `docs/adr`          | Decisiones técnicas ya tomadas (0001–0004)                                                                                                   |
-| `docs/sdlc`         | Documentos por fase del ciclo de vida; aquí va todo lo nuevo de producto                                                                     |
+| `docs/sdlc`         | Un archivo corto por fase del ciclo de vida (`01-ideacion.md` … `07-mantenimiento.md`); aquí va todo lo nuevo de producto                    |
 | `spikes/lens-fase0` | Prototipo desechable de Lens (no es parte de los workspaces)                                                                                 |
 
 ## Comandos
@@ -63,4 +62,4 @@ Antes de dar algo por terminado: `npm run lint && npm run typecheck && npm run t
 - TypeScript estricto, ESM, Prettier (`printWidth` 100, comillas simples).
 - Las métricas se miden, no se suponen: cada cambio de ranking o de detección va con sus números.
 - Los conjuntos de evaluación se fijan **antes** de ajustar; si se usan para corregir algo, se dice que dejaron de estar limpios.
-- `docs/sdlc/01-ideacion/01-problema-y-usuario.md` solo contiene el problema y el usuario objetivo: nada de soluciones ni entrevistas.
+- `docs/sdlc` tiene **un archivo por fase**, no carpetas. Cada archivo es corto y resumido. En `01-ideacion.md`, la sección "El problema y el usuario" solo contiene eso: nada de soluciones ni entrevistas.

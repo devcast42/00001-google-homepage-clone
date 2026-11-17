@@ -1,8 +1,10 @@
-# 01 — Requisitos de DocSeek Lens
+# Fase 2 — Requisitos
 
-**Estado:** ✅ Completo.
+Qué tiene que hacer DocSeek Lens, cómo debe ser y qué queda fuera.
 
-## Qué debe hacer
+**Estado:** ✅ Completa.
+
+### Qué debe hacer
 
 1. **Recibir código** de dos formas:
    - **Pegándolo en el buscador**: DocSeek se da cuenta solo de que es código.
@@ -17,14 +19,14 @@
 9. **Exportar** el análisis a un archivo, por ejemplo Markdown, para guardarlo en los apuntes.
 10. **Compartir** el análisis con un enlace. El enlace lleva el código dentro, así que quien lo abre ve lo mismo sin que el servidor lo guarde.
 
-## Cómo debe ser
+### Cómo debe ser
 
 - **Rápido**: el subrayado aparece en menos de 1 segundo. Las explicaciones pueden tardar más, pero se ven aparecer mientras se escriben.
 - **Comprobable**: toda explicación cita la sección de la documentación de la que sale (Node o MDN).
 - **Usable en móvil y con teclado.**
 - **Privado**: el servidor no guarda el código pegado, ni siquiera para compartirlo.
 
-## Fuera de alcance (por ahora)
+### Fuera de alcance (por ahora)
 
 - Otros lenguajes que no sean JavaScript o TypeScript.
 - Librerías de npm (Express, React…): solo Node.js y el propio JavaScript.
@@ -32,7 +34,7 @@
 - Extensión para el editor.
 - Cuentas de usuario o historial.
 
-## Decisiones tomadas
+### Decisiones tomadas
 
 | Pregunta                                                   | Decisión                                                                                             |
 | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |

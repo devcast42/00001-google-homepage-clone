@@ -8,7 +8,7 @@ Qué tiene que hacer DocSeek Lens, cómo debe ser y qué queda fuera.
 
 1. **Recibir código** de dos formas:
    - **Pegándolo en el buscador**: DocSeek se da cuenta solo de que es código.
-   - **Con un botón al lado del buscador**, como el de Google Lens en Google, que abre el modo para pegar código o arrastrar un archivo `.js` o `.ts`.
+   - **Con un botón al lado del buscador**, como el de Google Lens en Google, que abre el modo para pegar código o arrastrar un archivo de código (`.js`, `.ts`, `.rs`…).
 2. **Subrayar las funciones** de Node.js, Express y React en su línea.
 3. **Mostrar una tarjeta** al pasar el ratón o tocar una función: qué es, en una frase sencilla, y el enlace a su sección de la documentación.
 4. **Listar los conceptos** y las cosas del lenguaje que aparecen (streams, promesas, `async/await`…), cada uno con su enlace: cada cosa a la documentación de su tecnología (Node, Express o React), y lo del lenguaje a la de JavaScript (MDN).
